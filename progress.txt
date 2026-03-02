@@ -1,7 +1,7 @@
 # skill-generator Progress Tracker
 
 ## Current Status
-**Current Step:** Step 1: Ask - COMPLETED
+**Current Step:** Step 2: Plan - In Progress
 **Date:** 2026-03-02
 
 ---
@@ -16,26 +16,30 @@
   - Structure: Follows new-output-folder-structure.png
   - Process: Iterative with user approval at each step
   - Skill output location: ~/.claude/skills/[skill-name]/
+- [x] Git Repository Initialized and Linked
+  - User: daveli2001 <zeyu.li.2001@foxmail.com>
+  - Remote: git@github.com:daveli2001/skill-generator.git
+  - SSH key generated and configured
+  - Initial commit completed and pushed to master
 
 ---
 
 ## In Progress
 - [ ] Step 2: Plan - Creating specification files
-  - [ ] PRD.md
+  - [ ] PRD.md (drafting now)
   - [ ] FLOW.md
   - [ ] TECH_STACK.md
   - [ ] FRONTEND_GUIDELINES.md
   - [ ] BACKEND_STRUCTURE.md
   - [ ] IMPLEMENTATION_PLAN.md
-  - [ ] CLAUDE.md (initial version created)
-  - [ ] progress.txt (this file)
-  - [ ] LESSONS.md
+  - [x] CLAUDE.md (initial version created)
+  - [x] progress.txt (this file)
+  - [x] LESSONS.md
 
 ---
 
 ## Next Up
-- Awaiting user confirmation to proceed to Step 2: Plan
-- Then: Create PRD.md first, wait for approval before next file
+- Creating PRD.md - awaiting user review and approval
 
 ---
 

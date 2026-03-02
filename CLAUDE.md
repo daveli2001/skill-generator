@@ -77,7 +77,62 @@ At the start of each session:
 
 ## Git Workflow
 
-- **Step 2 starts with git initialization:** Always ask user for git identity (name + email) as the first sub-step of Step 2
+### Git Repository Check (Always First)
+**Before any git operations, always check if the repository is already linked:**
+```bash
+git remote -v
+```
+- If origin is already set to the correct GitHub repository, skip linking
+- If no remote exists, proceed with setup
+
+### Step 2 Starts with Git Setup
+**Always ask user for git identity (name + email) as the first sub-step of Step 2**
+
+### Standard Git Repository Linking Operation (SSH)
+When setting up a new repository, follow these steps in order:
+
+1. **Initialize git (if not already done):**
+   ```bash
+   git init
+   ```
+
+2. **Configure git identity:**
+   ```bash
+   git config user.name "[user's name]"
+   git config user.email "[user's email]"
+   ```
+
+3. **Add GitHub remote (SSH):**
+   ```bash
+   git remote add origin git@github.com:[username]/[repository].git
+   ```
+
+4. **Generate SSH key (if not exists):**
+   ```bash
+   ssh-keygen -t ed25519 -C "[user's email]" -f ~/.ssh/id_ed25519 -N ""
+   ```
+
+5. **Display public key for user to add to GitHub:**
+   ```bash
+   cat ~/.ssh/id_ed25519.pub
+   ```
+   - Instruct user to add this key to: https://github.com/settings/keys
+
+6. **Test SSH connection:**
+   ```bash
+   ssh -T git@github.com -o StrictHostKeyChecking=no
+   ```
+   - Expected: "You've successfully authenticated"
+
+7. **Initial commit and push:**
+   ```bash
+   git add -A
+   git commit -m "Initial commit: [description]"
+   git push -u origin master
+   ```
+
+### Ongoing Git Operations
 - Commit after each function module is created
-- Use GitHub for version control (not file versioning)
-- Ask user before pushing to remote
+- Commit after each specification file is approved
+- Ask user before pushing to remote (unless already authorized)
+

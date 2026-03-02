@@ -36,6 +36,29 @@ This file captures patterns and rules learned from corrections, debugging sessio
 
 ---
 
+## Lesson 3: Git Repository Linking Standard Operation
+**Date:** 2026-03-02
+**Trigger:** User requested to link local folder to GitHub repository using SSH.
+
+**Problem:** The assistant needed a repeatable process for linking local skill-generator folders to GitHub repositories.
+
+**Solution:**
+- Created a standard operation procedure in CLAUDE.md for git repository linking
+- Steps include: initialize git, configure identity, add remote, generate SSH key, test connection, push
+- Always check if repository is already linked before attempting to link again (use `git remote -v`)
+
+**Rule Added to CLAUDE.md:**
+> **Git Repository Check (Always First):** Before any git operations, always check if the repository is already linked using `git remote -v`. If origin is already set, skip linking.
+
+**Standard SSH Key Setup:**
+```bash
+ssh-keygen -t ed25519 -C "[email]" -f ~/.ssh/id_ed25519 -N ""
+cat ~/.ssh/id_ed25519.pub  # User adds this to GitHub
+ssh -T git@github.com -o StrictHostKeyChecking=no
+```
+
+---
+
 ## Lessons Learned (Future entries will be added here)
 
 ### Template for New Lessons:
