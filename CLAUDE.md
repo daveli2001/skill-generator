@@ -6,6 +6,14 @@ This file contains rules and context that must be followed in every session.
 
 ## CRITICAL WORKFLOW RULES
 
+### Rule 0: Create Core Files First (Step 1 Start)
+**At the beginning of Step 1: Ask, always create these core context files first:**
+- `CLAUDE.md` - Base rules and skill structure
+- `progress.txt` - Progress tracking initialized to Step 1
+- `LESSONS.md` - Template for future lessons
+
+These files provide the foundation for the entire skill creation process.
+
 ### Rule 1: Never Skip Steps
 **DO NOT jump to Step 2 (Plan) before the user confirms Step 1 (Ask) is complete.**
 

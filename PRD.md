@@ -33,6 +33,7 @@
 **User Story:** As a product manager, I want to be asked the right questions about my process so that the generated skill accurately reflects my requirements.
 
 **Acceptance Criteria:**
+- [ ] skill-generator creates core context files first (CLAUDE.md, progress.txt, LESSONS.md)
 - [ ] skill-generator asks all 7 core questions:
   1. Who is this for?
   2. What is the user's core action?
@@ -41,7 +42,9 @@
   5. What data needs to be displayed?
   6. What happens on error?
   7. What happens on success?
-- [ ] skill-generator asks additional technical questions (framework, integration, structure, scope)
+- [ ] skill-generator asks technical clarification questions:
+  - Agent framework preferences (default: as defined in CLAUDE.md Skill Structure section)
+  - Structure preferences (default: as defined in CLAUDE.md Skill Structure section)
 - [ ] skill-generator waits for explicit user confirmation before proceeding to Step 2
 
 **Out of Scope:** Auto-generating questions based on vague input - skill-generator must ask specific, structured questions.
