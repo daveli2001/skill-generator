@@ -84,12 +84,17 @@
 **User Story:** As a user, I want confidence that my skill works correctly before I deploy it.
 
 **Acceptance Criteria:**
-- [ ] Output Quality check: Verify all generated files match specifications
-- [ ] Redundancy check: No duplicate or conflicting logic
-- [ ] Security check: No vulnerabilities (command injection, path traversal, etc.)
-- [ ] User must manually approve each checkpoint before launch
+- [ ] **Redundancy check:** No duplicate or conflicting logic in generated files
+- [ ] **Security check:** No vulnerabilities (command injection, path traversal, etc.)
+- [ ] **Output Quality check:** User provides a real use case for the skill being created
+  - skill-generator loads the created skill to execute the use case
+  - **Direct task execution or using other skills is prohibited** - the skill being created must be loaded and run
+  - User reviews the output/result
+  - If user approves the result → Quality check passed, proceed to launch
+  - If user reports issues → Activate Step 5: Debug to help fix the skill
+- [ ] User must manually approve Redundancy and Security checkpoints before launch
 
-**Out of Scope:** Automated testing (manual verification required).
+**Out of Scope:** Manual file-by-file verification by users (quality is validated through actual use case execution).
 
 ---
 
