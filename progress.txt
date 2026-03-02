@@ -1,0 +1,45 @@
+# skill-generator Progress Tracker
+
+## Current Status
+**Current Step:** Step 1: Ask - COMPLETED
+**Date:** 2026-03-02
+
+---
+
+## Completed
+- [x] Step 1: Ask - All clarifying questions asked and answered
+  - Target users: Non-technical users with domain expertise
+  - Core action: Iterative conversation to refine process agents
+  - Output: Documentation + Implementation + Git repository
+  - Framework: Anthropic's agent framework (Claude Code skills)
+  - Integration: A skill within Claude Code
+  - Structure: Follows new-output-folder-structure.png
+  - Process: Iterative with user approval at each step
+  - Skill output location: ~/.claude/skills/[skill-name]/
+
+---
+
+## In Progress
+- [ ] Step 2: Plan - Creating specification files
+  - [ ] PRD.md
+  - [ ] FLOW.md
+  - [ ] TECH_STACK.md
+  - [ ] FRONTEND_GUIDELINES.md
+  - [ ] BACKEND_STRUCTURE.md
+  - [ ] IMPLEMENTATION_PLAN.md
+  - [ ] CLAUDE.md (initial version created)
+  - [ ] progress.txt (this file)
+  - [ ] LESSONS.md
+
+---
+
+## Next Up
+- Awaiting user confirmation to proceed to Step 2: Plan
+- Then: Create PRD.md first, wait for approval before next file
+
+---
+
+## Session Notes
+- Initial session: Defined requirements through Q&A
+- Key decision: skill-generator is a Claude Code skill that creates other skills
+- Lesson learned: Never skip steps - must get user confirmation before proceeding
