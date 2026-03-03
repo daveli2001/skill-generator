@@ -116,6 +116,31 @@ FIRECRAWL_API_KEY=your-api-key-here
 **Usage in Skills:**
 When a skill needs to scrape web content, it should load and use the firecrawl skill directly via Claude Code's Skill tool. No wrapper scripts or subprocess calls are needed.
 
+**Web Scraping Flow:**
+
+```
+1. Skill needs to scrape a URL
+       ↓
+2. Load firecrawl skill (via Claude Code's Skill tool)
+       ↓
+3. Pass URL to firecrawl skill
+       ↓
+4. Firecrawl returns scraped content (markdown, HTML, etc.)
+       ↓
+5. Skill processes the content and returns results
+```
+
+**What TO Do:**
+- Load firecrawl skill via Claude Code's Skill tool
+- Pass URL and let firecrawl handle the scraping
+- Use the returned markdown/HTML content
+
+**What NOT to Do:**
+- Don't import `firecrawl-py` Python SDK
+- Don't use `requests` or `BeautifulSoup`
+- Don't write custom scrapers
+- Don't wrap firecrawl CLI in subprocess calls
+
 ---
 
 ## Skill Structure Requirements

@@ -155,7 +155,8 @@ For each file in order:
 2. User provides use case
 3. **Hard Rule:** skill-generator MUST load the created skill via command line or skill loading mechanism
    - Example: `claude /path/to/skill` or equivalent skill loading command
-   - **Prohibited:** Direct task execution or using other skills to simulate the skill
+   - **Prohibited:** Direct task execution or using other skills to simulate the skill's function
+   - **Note:** The skill MAY load its own helper skills (e.g., firecrawl for web scraping) as part of its normal operation - this is not "simulating"
 4. skill-generator runs the use case through the loaded skill
 5. User reviews the output/result
 6. **Decision Point:** Does user approve the result?
