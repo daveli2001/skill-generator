@@ -50,3 +50,4 @@
 - Firecrawl setup: Use firecrawl CLI/skill for web extraction, not Python SDK
 - Documentation rule: Update LESSONS.md, progress.txt, CLAUDE.md BEFORE git commit ONLY when a problem is solved; otherwise git commit directly
 - **CRITICAL:** Never delete existing LESSONS.md content - always append new lessons
+- **VIOLATION INCIDENT:** Lesson 10 documents the deletion of Lessons 1-8 and their restoration
