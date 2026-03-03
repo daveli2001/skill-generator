@@ -73,42 +73,44 @@ These are common dependencies available for skills created by skill-generator. I
 
 ### Web Extraction
 
-| Package | Version | Purpose | Requirement |
-|---------|---------|---------|-------------|
-| `firecrawl-py` | Latest | **MANDATORY** - Web scraping via Firecrawl API | Required for all web extraction |
+| Tool | Version | Purpose | Requirement |
+|------|---------|---------|-------------|
+| `firecrawl` skill | Latest | **MANDATORY** - Web scraping via Firecrawl API | Required for all web extraction |
 
-#### Firecrawl Setup (Required Web Extraction Tool)
+#### Firecrawl Skill Setup (Required Web Extraction Tool)
 
-**Rule:** All skills created by skill-generator MUST use Firecrawl for web extraction. Other methods (requests, BeautifulSoup, etc.) are NOT permitted for web scraping.
+**Rule:** All skills created by skill-generator MUST use the firecrawl skill for web extraction. Other methods (requests, BeautifulSoup, firecrawl-py Python SDK, etc.) are NOT permitted for web scraping.
 
-**Installation:**
+**Setup:**
+1. Ensure FIRECRAWL_API_KEY is set in `.env` file
+2. Use the firecrawl skill via Claude Code's Skill tool
+
+**Basic Usage (in a skill script):**
+```python
+# Call the firecrawl skill through Claude Code
+# The firecrawl skill is invoked using the Skill tool
+```
+
+**CLI Usage:**
 ```bash
-pip install firecrawl-py
+# The firecrawl CLI reads FIRECRAWL_API_KEY from environment
+export FIRECRAWL_API_KEY="your-api-key-here"
+
+# Scrape a single URL to markdown
+firecrawl scrape -f markdown "https://example.com"
+
+# Scrape with multiple formats (outputs JSON)
+firecrawl scrape -f markdown,html "https://example.com"
+
+# Save output to file
+firecrawl scrape -f markdown "https://example.com" -o output.md
 ```
 
 **Environment Setup:**
 ```bash
 # Get API key from https://www.firecrawl.dev/app
-export FIRECRAWL_API_KEY="your-api-key-here"
-```
-
-**Basic Usage:**
-```python
-from firecrawl import FirecrawlApp
-
-app = FirecrawlApp(api_key=os.environ.get("FIRECRAWL_API_KEY"))
-
-# Scrape a single URL
-scrape_result = app.scrape_url(
-    url='https://example.com',
-    params={'formats': ['markdown', 'html']}
-)
-
-# Crawl multiple pages from a domain
-crawl_result = app.crawl_url(
-    url='https://example.com',
-    params={'limit': 10, 'scrapeOptions': {'formats': ['markdown']}}
-)
+# Store in .env file (never commit to git)
+FIRECRAWL_API_KEY=your-api-key-here
 ```
 
 **SKILL.md Integration:**
@@ -120,6 +122,27 @@ description: Extract content from URLs using Firecrawl
 scripts:
   - scripts/extract.py
 ---
+```
+
+**Example Skill Script (scripts/extract.py):**
+```python
+import subprocess
+import os
+
+def scrape_url(url):
+    """Scrape a URL using firecrawl CLI."""
+    # Load API key from environment
+    api_key = os.environ.get('FIRECRAWL_API_KEY')
+    if not api_key:
+        raise ValueError("FIRECRAWL_API_KEY not set")
+
+    result = subprocess.run(
+        ['firecrawl', 'scrape', '-f', 'markdown', url],
+        capture_output=True,
+        text=True,
+        env={**os.environ, 'FIRECRAWL_API_KEY': api_key}
+    )
+    return result.stdout
 ```
 
 ---
@@ -264,10 +287,11 @@ Create `scripts/requirements.txt` with only the dependencies your skill needs:
 
 **Minimal Template (web extraction only):**
 ```
-firecrawl-py>=1.0.0
 python-dotenv==1.0.0
 pyyaml==6.0.1
 ```
+
+**Note:** Web extraction uses the firecrawl CLI/skill, not a Python package. Ensure FIRECRAWL_API_KEY is set in .env.
 
 **Office Documents Template:**
 ```
@@ -287,8 +311,8 @@ pandas==2.1.4
 
 **Full Template (all features):**
 ```
-# Web extraction (MANDATORY - no fallback)
-firecrawl-py>=1.0.0
+# Web extraction (MANDATORY - uses firecrawl CLI/skill, no Python package needed)
+# Ensure FIRECRAWL_API_KEY is set in .env
 
 # Office documents
 python-docx==1.1.0
@@ -304,9 +328,6 @@ plotly==5.18.0
 # Utilities
 pyyaml==6.0.1
 python-dotenv==1.0.0
-```
-python-dotenv==1.0.0
-requests==2.31.0
 ```
 
 Install with:
@@ -346,6 +367,7 @@ The following are NOT allowed in skill-generator or generated skills:
 | External APIs without user consent | Privacy violation |
 | Non-open-source dependencies | Licensing issues |
 | `requests`/`BeautifulSoup` for web scraping | Must use Firecrawl skill instead |
+| `firecrawl-py` Python SDK | Must use firecrawl CLI/skill instead |
 
 ---
 
