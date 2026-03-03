@@ -52,6 +52,7 @@ The workflow MUST be followed in exact order:
    - Document the trigger, problem, solution, and any rules added
    - Use the lesson template at the end of LESSONS.md
    - Date: YYYY-MM-DD format
+   - **NEVER delete or overwrite existing lessons** - always append new lessons after existing ones
 
 2. **Update progress.txt** - Record the completed step:
    - Update current status and date
@@ -74,6 +75,22 @@ The workflow MUST be followed in exact order:
 **Summary:**
 - Problem solved → Update files, then git commit
 - No problem solved → Git commit directly
+- **NEVER delete existing LESSONS.md content without user permission**
+
+---
+
+### Rule 6: Never Delete Existing Content Without Permission
+
+**CRITICAL: When updating documentation files:**
+
+- **LESSONS.md:** NEVER delete or replace existing lessons. Always append new lessons after existing ones.
+- **progress.txt:** Update status and add notes, don't remove historical context.
+- **CLAUDE.md:** Modify rules only when necessary, preserve existing rules unless they're being replaced.
+
+**If you accidentally delete content:**
+1. Acknowledge the mistake immediately
+2. Restore the deleted content
+3. Document the incident in LESSONS.md
 
 ---
 

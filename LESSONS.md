@@ -129,4 +129,20 @@ ssh -T git@github.com -o StrictHostKeyChecking=no
 
 ---
 
+## Lesson 8: Never Delete Existing Lessons Without Permission
+**Date:** 2026-03-03
+**Trigger:** User noticed that Lessons 1-6 were accidentally deleted when adding Lesson 7.
+
+**Problem:** When adding a new lesson to LESSONS.md, the assistant accidentally replaced all existing lessons (1-6) instead of appending the new lesson.
+
+**Solution:**
+- Restored all 6 deleted lessons
+- Added Rule 6 to CLAUDE.md: "Never Delete Existing Content Without Permission"
+- Updated Rule 5 to explicitly state: "NEVER delete or overwrite existing lessons - always append new lessons after existing ones"
+
+**Rule Added to CLAUDE.md:**
+> **Rule 6: Never Delete Existing Content Without Permission** - When updating LESSONS.md, never delete or replace existing lessons. Always append new lessons after existing ones. If content is accidentally deleted, acknowledge immediately, restore it, and document the incident.
+
+---
+
 ## Lessons Learned (Future entries will be added here)

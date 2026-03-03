@@ -49,3 +49,4 @@
 - Lesson learned: Never skip steps - must get user confirmation before proceeding
 - Firecrawl setup: Use firecrawl CLI/skill for web extraction, not Python SDK
 - Documentation rule: Update LESSONS.md, progress.txt, CLAUDE.md BEFORE git commit ONLY when a problem is solved; otherwise git commit directly
+- **CRITICAL:** Never delete existing LESSONS.md content - always append new lessons
