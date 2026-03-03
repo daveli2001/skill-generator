@@ -59,6 +59,24 @@ ssh -T git@github.com -o StrictHostKeyChecking=no
 
 ---
 
+## Lesson 4: Use Firecrawl Skill/CLI for Web Extraction (Not Python SDK)
+**Date:** 2026-03-03
+**Trigger:** User asked to test Firecrawl scraping on an Amazon URL. Assistant tried to install `firecrawl-py` Python SDK instead of using the firecrawl skill.
+
+**Problem:** The assistant attempted to use `pip install firecrawl-py` and the Python SDK when the correct approach was to use the firecrawl skill (Claude Code skill) or firecrawl CLI.
+
+**Solution:**
+- Changed TECH_STACK.md to specify firecrawl CLI/skill as the MANDATORY method for web extraction
+- Removed `firecrawl-py` from all requirements.txt templates
+- Added CLI usage: `firecrawl scrape -f markdown <url>`
+- Added `firecrawl-py Python SDK` to Prohibited Technologies
+- Verified: Firecrawl CLI successfully scrapes URLs when FIRECRAWL_API_KEY is set
+
+**Rule Added to TECH_STACK.md:**
+> All skills created by skill-generator MUST use the firecrawl skill for web extraction. Other methods (requests, BeautifulSoup, firecrawl-py Python SDK, etc.) are NOT permitted for web scraping.
+
+---
+
 ## Lessons Learned (Future entries will be added here)
 
 ### Template for New Lessons:

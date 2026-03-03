@@ -37,7 +37,14 @@ The workflow MUST be followed in exact order:
 - API keys must always be loaded from environment variables, never hardcoded
 - Instruct users to create their own `.env` file with their API keys
 
-### Rule 4: Update Progress After Each Step
+### Rule 4: Web Extraction Must Use Firecrawl Skill/CLI
+- **ALWAYS** use the firecrawl skill or firecrawl CLI for web extraction
+- **NEVER** attempt to install or use `firecrawl-py` Python SDK
+- **NEVER** use `requests` or `BeautifulSoup` for web scraping
+- CLI command: `firecrawl scrape -f markdown <url>`
+- Ensure FIRECRAWL_API_KEY is set in `.env` before using firecrawl
+
+### Rule 5: Update Progress After Each Step
 - Update `progress.txt` after completing each step
 - Update `LESSONS.md` when encountering and resolving errors
 - Update `CLAUDE.md` when errors are caused by rules in this file (requires user approval)
