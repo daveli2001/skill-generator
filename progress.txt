@@ -39,7 +39,7 @@
 ---
 
 ## Next Up
-- FRONTEND_GUIDELINES.md approval, then BACKEND_STRUCTURE.md
+- User to run demo chart script, then BACKEND_STRUCTURE.md
 
 ---
 
