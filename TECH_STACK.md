@@ -56,11 +56,11 @@ These are common dependencies available for skills created by skill-generator. I
 
 | Package | Version | Purpose | Chart Types |
 |---------|---------|---------|-------------|
-| `matplotlib` | 3.7+ | Static charts | Bar, line, pie, scatter, area, histogram |
+| `matplotlib` | 3.7+ | Static charts | All standard chart types |
 | `plotly` | 5.15+ | Interactive charts | All types + dashboards |
-| `seaborn` | 0.12+ | Statistical charts | Heatmaps, distribution plots |
+| `seaborn` | 0.12+ | Statistical charts | Statistical visualizations |
 
-**Supported Chart Types:**
+**Supported Chart Types (non-exhaustive list):**
 - Combination bar and line charts
 - 100% stacked bar charts
 - Line charts
@@ -70,6 +70,17 @@ These are common dependencies available for skills created by skill-generator. I
 - Area charts
 - Scatter plots
 - Heatmaps
+- Histograms
+- Box plots
+- Violin plots
+- Funnel charts
+- Gauge charts
+- Treemaps
+- Sunburst charts
+- Waterfall charts
+- And any other chart type supported by matplotlib/plotly
+
+**Note:** The charting libraries (matplotlib, plotly) support a wide variety of chart types. The list above is not exhaustive - skills can create any chart type supported by these libraries based on user requirements.
 
 ### Web Extraction
 
@@ -153,11 +164,19 @@ Every skill created by skill-generator MUST follow this structure:
 ├── scripts/          # Optional: Executable code
 │   ├── *.py          # Python scripts (3.9+)
 │   └── *.sh          # Bash scripts (5.x+)
-├── references/       # Optional: Documentation loaded as needed
-│   └── *.md          # Markdown documentation
+├── references/       # Optional: Reference files of any type
+│   ├── *.md          # Markdown documentation
+│   ├── *.pdf         # PDF documents
+│   ├── *.docx        # Word documents
+│   ├── *.pptx        # PowerPoint presentations
+│   ├── *.xlsx        # Excel spreadsheets
+│   ├── *.csv         # CSV data files
+│   └── *             # Any other reference file type
 └── assets/           # Optional: Templates, fonts, icons
     └── *             # Any asset files
 ```
+
+**Note:** The `references/` folder can contain any file type that the skill needs to load and use, including but not limited to: PDF, DOCX, PPTX, XLSX, CSV, TXT, JSON, XML, images, and more.
 
 ---
 
