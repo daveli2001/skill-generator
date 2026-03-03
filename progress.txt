@@ -47,3 +47,5 @@
 - Initial session: Defined requirements through Q&A
 - Key decision: skill-generator is a Claude Code skill that creates other skills
 - Lesson learned: Never skip steps - must get user confirmation before proceeding
+- Firecrawl setup: Use firecrawl CLI/skill for web extraction, not Python SDK
+- Documentation rule: MUST update LESSONS.md, progress.txt, CLAUDE.md BEFORE any git commit
