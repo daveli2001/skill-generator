@@ -54,6 +54,12 @@ The workflow MUST be followed in exact order:
    - Date: YYYY-MM-DD format
    - **NEVER delete or overwrite existing lessons** - always append new lessons after existing ones
 
+   **CRITICAL TECHNICAL REQUIREMENT:**
+   - **MUST use `Edit()` tool** to append new lessons after existing content
+   - **NEVER use `Write()` tool** - it replaces the entire file and deletes all existing lessons
+   - **ALWAYS read LESSONS.md first** to verify all previous lessons are intact
+   - **Verify** the file ends with "## Lessons Learned (Future entries...)" before editing
+
 2. **Update progress.txt** - Record the completed step:
    - Update current status and date
    - Mark completed items with [x]
@@ -76,6 +82,13 @@ The workflow MUST be followed in exact order:
 - Problem solved → Update files, then git commit
 - No problem solved → Git commit directly
 - **NEVER delete existing LESSONS.md content without user permission**
+
+**LESSONS.md Editing Checklist (MUST verify before committing):**
+- [ ] Read LESSONS.md first to see existing lessons
+- [ ] Used `Edit()` NOT `Write()` to add new lesson
+- [ ] All previous lessons (1, 2, 3...) are still present
+- [ ] New lesson is appended after existing lessons
+- [ ] File ends with "## Lessons Learned (Future entries will be added here)"
 
 ---
 

@@ -177,14 +177,22 @@ ssh -T git@github.com -o StrictHostKeyChecking=no
 
 **Solution:**
 - Immediately restored all 8 deleted lessons
+- Updated CLAUDE.md Rule 5 with CRITICAL TECHNICAL REQUIREMENT and checklist
 - This incident is documented here as a reminder
-- Future lesson additions MUST use Edit() to append after the "Lessons Learned" section, NOT Write() to replace the file
 
-**Rule Reinforcement:**
-> **CRITICAL:** When adding new lessons to LESSONS.md:
-> 1. ALWAYS use Edit() tool to append after existing content
-> 2. NEVER use Write() tool which replaces the entire file
-> 3. Verify all previous lessons are intact before committing
+**Rule Added to CLAUDE.md:**
+> **CRITICAL TECHNICAL REQUIREMENT:** When adding new lessons to LESSONS.md:
+> - MUST use `Edit()` tool to append after existing content
+> - NEVER use `Write()` tool - it replaces the entire file and deletes all existing lessons
+> - ALWAYS read LESSONS.md first to verify all previous lessons are intact
+> - Verify the file ends with "## Lessons Learned (Future entries...)" before editing
+>
+> **LESSONS.md Editing Checklist (MUST verify before committing):**
+> - [ ] Read LESSONS.md first to see existing lessons
+> - [ ] Used `Edit()` NOT `Write()` to add new lesson
+> - [ ] All previous lessons (1, 2, 3...) are still present
+> - [ ] New lesson is appended after existing lessons
+> - [ ] File ends with "## Lessons Learned (Future entries will be added here)"
 
 ---
 
