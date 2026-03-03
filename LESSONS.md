@@ -77,21 +77,23 @@ ssh -T git@github.com -o StrictHostKeyChecking=no
 
 ---
 
-## Lesson 5: Documentation Updates Required Before Git Commit
+## Lesson 5: Documentation Updates When Problems Are Solved
 **Date:** 2026-03-03
 **Trigger:** User instruction to formalize documentation update requirements.
 
-**Problem:** Documentation files (LESSONS.md, progress.txt, CLAUDE.md) were sometimes updated after commits or inconsistently.
+**Problem:** The initial rule incorrectly required documentation updates before EVERY git commit, even when no problems were solved.
 
 **Solution:**
-- Created Rule 5 in CLAUDE.md mandating documentation updates BEFORE any git commit
-- Established order of operations: Problem Solved → LESSONS.md → progress.txt → CLAUDE.md → Git Commit
-- LESSONS.md must be updated for every problem solved
-- progress.txt must be updated after each step/sub-task
+- Updated Rule 5 in CLAUDE.md to clarify when documentation updates are required
+- Established two flows:
+  1. Problem solved → Update LESSONS.md → progress.txt → CLAUDE.md (if needed) → Git Commit
+  2. No problem solved → Git Commit directly
+- LESSONS.md must be updated only when a problem is solved
+- progress.txt should be updated after each step/sub-task
 - CLAUDE.md must be updated when new rules are needed based on experience
 
 **Rule Added to CLAUDE.md:**
-> **Rule 5: Documentation Updates (BEFORE Git Commit)** - CRITICAL: Before ANY git commit, you MUST update LESSONS.md, progress.txt, and CLAUDE.md (if needed) in that order. NEVER commit without updating these files first.
+> **Rule 5: Documentation Updates (When Problems Are Solved)** - When you solve a problem, update LESSONS.md, progress.txt, and CLAUDE.md (if needed) BEFORE git commit. If no problem was solved, git commit directly.
 
 ---
 

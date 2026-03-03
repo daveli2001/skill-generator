@@ -44,16 +44,16 @@ The workflow MUST be followed in exact order:
 - CLI command: `firecrawl scrape -f markdown <url>`
 - Ensure FIRECRAWL_API_KEY is set in `.env` before using firecrawl
 
-### Rule 5: Documentation Updates (BEFORE Git Commit)
+### Rule 5: Documentation Updates (When Problems Are Solved)
 
-**CRITICAL: Before ANY git commit, you MUST update these files in order:**
+**When you solve a problem, follow this order BEFORE git commit:**
 
-1. **Update LESSONS.md** - When encountering and successfully resolving ANY problem:
+1. **Update LESSONS.md** - Document the problem and solution:
    - Document the trigger, problem, solution, and any rules added
    - Use the lesson template at the end of LESSONS.md
    - Date: YYYY-MM-DD format
 
-2. **Update progress.txt** - After completing each step or sub-task:
+2. **Update progress.txt** - Record the completed step:
    - Update current status and date
    - Mark completed items with [x]
    - Update "In Progress" and "Next Up" sections
@@ -65,11 +65,15 @@ The workflow MUST be followed in exact order:
    - Requires user approval before committing rule changes
 
 **Order of Operations:**
+
 ```
-Problem Solved → LESSONS.md → progress.txt → CLAUDE.md (if needed) → Git Commit
+[If problem solved:] Problem Solved → LESSONS.md → progress.txt → CLAUDE.md (if needed) → Git Commit
+[If no problem:] Git Commit
 ```
 
-**NEVER commit without updating these files first.**
+**Summary:**
+- Problem solved → Update files, then git commit
+- No problem solved → Git commit directly
 
 ---
 
