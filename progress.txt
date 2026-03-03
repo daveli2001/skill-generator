@@ -51,3 +51,8 @@
 - Documentation rule: Update LESSONS.md, progress.txt, CLAUDE.md BEFORE git commit ONLY when a problem is solved; otherwise git commit directly
 - **CRITICAL:** Never delete existing LESSONS.md content - always append new lessons
 - **VIOLATION INCIDENT:** Lesson 10 documents the deletion of Lessons 1-8 and their restoration
+- **Session restart (2026-03-03):** Restored LESSONS.md (Lessons 1-10 + 13) after context loss
+- **New Rules Added to CLAUDE.md:**
+  - Rule 6 enhanced: Must ask user permission before overwriting LESSONS.md content
+  - Rule 7: Dependency installation must reference TECH_STACK.md first; ask user if not found
+  - Rule 8: Git commit requires explicit user permission (no exceptions)

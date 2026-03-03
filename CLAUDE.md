@@ -105,6 +105,73 @@ The workflow MUST be followed in exact order:
 2. Restore the deleted content
 3. Document the incident in LESSONS.md
 
+**LESSONS.md Specific Rule:**
+- Before editing LESSONS.md, always ask user for permission if the edit would overwrite or replace existing content
+- Never use Write() to replace the entire file - always use Edit() to append
+
+---
+
+### Rule 7: Dependency Installation Must Reference TECH_STACK.md
+
+**Before installing any Python package, npm package, or system tool:**
+
+1. **First**, check TECH_STACK.md for the approved dependency and version
+2. **If the dependency is listed in TECH_STACK.md**, proceed with installation using the specified version
+3. **If the dependency is NOT listed**, ask the user for confirmation before installing:
+   - Explain why the dependency is needed
+   - Propose the installation command
+   - Wait for explicit user approval
+
+**Example:**
+```
+User needs chart generation → Check TECH_STACK.md → matplotlib==3.8.2 is approved → Install with pip
+User needs xyz-package → Not in TECH_STACK.md → Ask user for confirmation first
+```
+
+**Never:**
+- Install packages without checking TECH_STACK.md first
+- Use default pip/npm install without version pinning
+- Install system tools without user confirmation
+
+---
+
+### Rule 8: Git Commit Requires User Permission
+
+**Before running any git commit:**
+
+1. **Always ask for explicit user permission** before committing
+2. Show the user what will be committed (git status summary)
+3. Wait for user confirmation
+4. Only proceed with git commit after approval
+
+**Exception:** None - this rule applies to ALL commits
+
+**What to show user before committing:**
+- List of files to be committed (git status)
+- Proposed commit message
+- Any unstaged changes that will NOT be included
+
+**Example flow:**
+```
+Assistant: "Ready to commit. Here's what will be committed:
+  - scripts/create_demo_charts.py (new file)
+  - LESSONS.md (modified)
+  - progress.txt (modified)
+
+  Proposed commit message: 'Add demo chart generation script'
+
+  Shall I proceed with git commit?"
+
+User: "Yes" or "Proceed"
+
+Assistant: [runs git commit]
+```
+
+**Never:**
+- Commit without asking
+- Assume user approval
+- Batch multiple commits without individual approval
+
 ---
 
 ## Project Context
