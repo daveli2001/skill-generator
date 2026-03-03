@@ -29,7 +29,15 @@ The workflow MUST be followed in exact order:
 - If input is ambiguous, ask clarifying questions
 - If a file already exists, ask whether to overwrite, merge, or skip
 
-### Rule 3: Update Progress After Each Step
+### Rule 3: .env Security (CRITICAL)
+- **NEVER** display `.env` file contents to the user or in any output
+- **NEVER** commit `.env` to git under any circumstances
+- **NEVER** include `.env` in any frontend display or artifact
+- **ALWAYS** verify `.env` is in `.gitignore` before any git operations
+- API keys must always be loaded from environment variables, never hardcoded
+- Instruct users to create their own `.env` file with their API keys
+
+### Rule 4: Update Progress After Each Step
 - Update `progress.txt` after completing each step
 - Update `LESSONS.md` when encountering and resolving errors
 - Update `CLAUDE.md` when errors are caused by rules in this file (requires user approval)
