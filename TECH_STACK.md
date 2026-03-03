@@ -73,13 +73,13 @@ These are common dependencies available for skills created by skill-generator. I
 
 ### Web Extraction
 
-| Package | Version | Purpose | Priority |
-|---------|---------|---------|----------|
-| `firecrawl-py` | Latest | **DEFAULT** - Web scraping API | Primary |
-| `beautifulsoup4` | 4.12+ | HTML parsing (fallback) | Secondary |
-| `lxml` | 4.9+ | Fast XML/HTML parser | With BeautifulSoup |
+| Package | Version | Purpose | Requirement |
+|---------|---------|---------|-------------|
+| `firecrawl-py` | Latest | **MANDATORY** - Web scraping via Firecrawl API | Required for all web extraction |
 
-#### Firecrawl Setup (Default Web Extraction Tool)
+#### Firecrawl Setup (Required Web Extraction Tool)
+
+**Rule:** All skills created by skill-generator MUST use Firecrawl for web extraction. Other methods (requests, BeautifulSoup, etc.) are NOT permitted for web scraping.
 
 **Installation:**
 ```bash
@@ -120,16 +120,6 @@ description: Extract content from URLs using Firecrawl
 scripts:
   - scripts/extract.py
 ---
-```
-
-**Fallback (if Firecrawl unavailable):**
-```python
-import requests
-from bs4 import BeautifulSoup
-
-response = requests.get(url)
-soup = BeautifulSoup(response.content, 'lxml')
-content = soup.get_text()
 ```
 
 ---
@@ -297,12 +287,8 @@ pandas==2.1.4
 
 **Full Template (all features):**
 ```
-# Web extraction (primary)
+# Web extraction (MANDATORY - no fallback)
 firecrawl-py>=1.0.0
-
-# Web extraction (fallback)
-beautifulsoup4==4.12.2
-lxml==4.9.3
 
 # Office documents
 python-docx==1.1.0
@@ -317,6 +303,8 @@ plotly==5.18.0
 
 # Utilities
 pyyaml==6.0.1
+python-dotenv==1.0.0
+```
 python-dotenv==1.0.0
 requests==2.31.0
 ```
@@ -357,6 +345,7 @@ The following are NOT allowed in skill-generator or generated skills:
 | Hardcoded credentials | Security risk |
 | External APIs without user consent | Privacy violation |
 | Non-open-source dependencies | Licensing issues |
+| `requests`/`BeautifulSoup` for web scraping | Must use Firecrawl skill instead |
 
 ---
 
