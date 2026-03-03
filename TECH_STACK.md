@@ -113,37 +113,8 @@ firecrawl scrape -f markdown "https://example.com" -o output.md
 FIRECRAWL_API_KEY=your-api-key-here
 ```
 
-**SKILL.md Integration:**
-```yaml
----
-name: web-extraction-skill
-version: 1.0.0
-description: Extract content from URLs using Firecrawl
-scripts:
-  - scripts/extract.py
----
-```
-
-**Example Skill Script (scripts/extract.py):**
-```python
-import subprocess
-import os
-
-def scrape_url(url):
-    """Scrape a URL using firecrawl CLI."""
-    # Load API key from environment
-    api_key = os.environ.get('FIRECRAWL_API_KEY')
-    if not api_key:
-        raise ValueError("FIRECRAWL_API_KEY not set")
-
-    result = subprocess.run(
-        ['firecrawl', 'scrape', '-f', 'markdown', url],
-        capture_output=True,
-        text=True,
-        env={**os.environ, 'FIRECRAWL_API_KEY': api_key}
-    )
-    return result.stdout
-```
+**Usage in Skills:**
+When a skill needs to scrape web content, it should load and use the firecrawl skill directly via Claude Code's Skill tool. No wrapper scripts or subprocess calls are needed.
 
 ---
 
