@@ -16,35 +16,78 @@ Skills created by skill-generator should produce outputs that are:
 
 ---
 
+## Design Tokens
+
+### Core Design Variables
+
+```css
+:root {
+  /* Typography */
+  --font-en: 'Times New Roman', Times, serif;
+  --font-zh: '/home/dave/skill-generator/assets/Noto_Serif_SC';
+
+  /* Colors */
+  --primary-color: #000000;
+  --secondary-color: #E98532;
+  --bg-color: #ffffff;
+  --surface-color: #f8f9fa;
+
+  /* Text Colors */
+  --heading-color: #000000;
+  --body-text-color: #333333;
+  --small-text-color: #5c5c5c;
+
+  /* Borders */
+  --border-def: 1px solid #d0d0d0;
+  --border-radius: 0px;
+
+  /* Shadows */
+  --shadow-def: 0 4px 12px rgba(0, 0, 0, 0.06);
+
+  /* Font Sizes */
+  --h1-size: 64px;
+  --h2-size: 40px;
+  --h3-size: 24px;
+  --body-size: 18px;
+  --small-size: 14px;
+}
+```
+
+---
+
 ## Color Palette
 
 ### Primary Colors
 
 | Name | Hex | RGB | Usage |
 |------|-----|-----|-------|
-| Primary Blue | `#2563EB` | rgb(37, 99, 235) | Primary actions, links, highlights |
-| Primary Dark | `#1E40AF` | rgb(30, 64, 175) | Hover states, emphasis |
-| Primary Light | `#3B82F6` | rgb(59, 130, 246) | Secondary elements |
+| Primary | `#000000` | rgb(0, 0, 0) | Headings, primary text, borders |
+| Secondary | `#E98532` | rgb(233, 133, 50) | Accents, highlights, calls-to-action |
 
 ### Neutral Colors
 
 | Name | Hex | RGB | Usage |
 |------|-----|-----|-------|
-| Gray 900 | `#111827` | rgb(17, 24, 39) | Primary text |
-| Gray 700 | `#374151` | rgb(55, 65, 81) | Secondary text |
-| Gray 500 | `#6B7280` | rgb(107, 114, 128) | Muted text, borders |
-| Gray 300 | `#D1D5DB` | rgb(209, 213, 219) | Dividers |
-| Gray 100 | `#F3F4F6` | rgb(243, 244, 246) | Backgrounds |
-| White | `#FFFFFF` | rgb(255, 255, 255) | Cards, surfaces |
+| Background | `#FFFFFF` | rgb(255, 255, 255) | Page background |
+| Surface | `#F8F9FA` | rgb(248, 249, 250) | Cards, panels, surfaces |
+| Border | `#D0D0D0` | rgb(208, 208, 208) | Borders, dividers |
+
+### Text Colors
+
+| Name | Hex | RGB | Usage |
+|------|-----|-----|-------|
+| Heading | `#000000` | rgb(0, 0, 0) | All headings (H1-H6) |
+| Body Text | `#333333` | rgb(51, 51, 51) | Main body content |
+| Small Text | `#5C5C5C` | rgb(92, 92, 92) | Captions, labels, secondary text |
 
 ### Semantic Colors
 
 | Name | Hex | Usage |
 |------|-----|-------|
-| Success | `#10B981` | Success states, positive values |
-| Warning | `#F59E0B` | Warnings, cautions |
-| Error | `#EF4444` | Errors, negative values |
-| Info | `#3B82F6` | Informational messages |
+| Success | `#28A745` | Success states, positive values |
+| Warning | `#FFC107` | Warnings, cautions |
+| Error | `#DC3545` | Errors, negative values, deletions |
+| Info | `#17A2B8` | Informational messages |
 
 ---
 
@@ -52,35 +95,36 @@ Skills created by skill-generator should produce outputs that are:
 
 ### Font Families
 
-```css
-/* Primary Font - System fonts for performance */
---font-sans: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-
-/* Monospace - For code, data tables */
---font-mono: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
-```
+| Font | Variable | Value | Usage |
+|------|----------|-------|-------|
+| English | `--font-en` | `'Times New Roman', Times, serif` | All English text |
+| Chinese | `--font-zh` | `/home/dave/skill-generator/assets/Noto_Serif_SC` | All Chinese text |
+| Monospace | - | `'Courier New', Courier, monospace` | Code, data tables |
 
 ### Font Sizes
 
-| Name | Size | Line Height | Usage |
-|------|------|-------------|-------|
-| xs | 12px (0.75rem) | 16px | Captions, footnotes |
-| sm | 14px (0.875rem) | 20px | Secondary text, labels |
-| base | 16px (1rem) | 24px | Body text |
-| lg | 18px (1.125rem) | 28px | Lead paragraphs |
-| xl | 20px (1.25rem) | 28px | H4 headings |
-| 2xl | 24px (1.5rem) | 32px | H3 headings |
-| 3xl | 30px (1.875rem) | 36px | H2 headings |
-| 4xl | 36px (2.25rem) | 40px | H1 headings |
+| Name | Variable | Size | Usage |
+|------|----------|------|-------|
+| H1 | `--h1-size` | 64px | Main titles |
+| H2 | `--h2-size` | 40px | Section headings |
+| H3 | `--h3-size` | 24px | Subsection headings |
+| Body | `--body-size` | 18px | Main body text |
+| Small | `--small-size` | 14px | Captions, labels, footnotes |
 
 ### Font Weights
 
 | Name | Weight | Usage |
 |------|--------|-------|
 | Normal | 400 | Body text |
-| Medium | 500 | Labels, emphasis |
-| Semibold | 600 | Headings, buttons |
-| Bold | 700 | Strong emphasis |
+| Bold | 700 | Headings, emphasis |
+
+### Line Heights
+
+| Type | Line Height |
+|------|-------------|
+| Headings | 1.2 |
+| Body Text | 1.6 |
+| Small Text | 1.5 |
 
 ---
 
@@ -88,19 +132,16 @@ Skills created by skill-generator should produce outputs that are:
 
 ### Spacing Scale
 
-Based on a 4px grid system:
+Based on an 8px grid system:
 
 | Name | Size | Usage |
 |------|------|-------|
-| 1 | 4px (0.25rem) | Tight spacing |
-| 2 | 8px (0.5rem) | Compact spacing |
-| 3 | 12px (0.75rem) | Standard spacing |
-| 4 | 16px (1rem) | Default spacing |
-| 5 | 20px (1.25rem) | Comfortable spacing |
-| 6 | 24px (1.5rem) | Section spacing |
-| 8 | 32px (2rem) | Large gaps |
-| 10 | 40px (2.5rem) | XL gaps |
-| 12 | 48px (3rem) | XXL gaps |
+| 1 | 8px | Tight spacing |
+| 2 | 16px | Standard spacing |
+| 3 | 24px | Comfortable spacing |
+| 4 | 32px | Section spacing |
+| 5 | 48px | Large gaps |
+| 6 | 64px | XL gaps |
 
 ---
 
@@ -110,51 +151,45 @@ Based on a 4px grid system:
 
 | Name | Width | Usage |
 |------|-------|-------|
-| sm | 640px | Small content |
-| md | 768px | Medium content |
-| lg | 1024px | Large content |
-| xl | 1280px | Full-width content |
+| Narrow | 768px | Documents, letters |
+| Standard | 1024px | Reports, dashboards |
+| Wide | 1280px | Full-width content |
 
 ### Responsive Breakpoints
 
 | Name | Min Width | Target |
 |------|-----------|--------|
-| sm | 640px | Large phones |
-| md | 768px | Tablets |
-| lg | 1024px | Laptops |
-| xl | 1280px | Desktops |
-| 2xl | 1536px | Large screens |
+| Mobile | 320px | Phones |
+| Tablet | 768px | Tablets |
+| Desktop | 1024px | Laptops |
+| Large | 1280px | Desktops |
 
 ---
 
 ## Components
 
-### Buttons
+### Borders and Shadows
 
 ```css
-.btn-primary {
-  background-color: #2563EB;
-  color: #FFFFFF;
-  padding: 8px 16px;
-  border-radius: 6px;
-  font-weight: 500;
-  font-size: 14px;
-}
+/* Default Border */
+border: var(--border-def);
 
-.btn-primary:hover {
-  background-color: #1E40AF;
-}
+/* Default Shadow */
+box-shadow: var(--shadow-def);
+
+/* Border Radius */
+border-radius: var(--border-radius); /* 0px - sharp corners */
 ```
 
 ### Cards
 
 ```css
 .card {
-  background: #FFFFFF;
-  border: 1px solid #E5E7EB;
-  border-radius: 8px;
-  padding: 16px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  background: var(--surface-color);
+  border: var(--border-def);
+  border-radius: var(--border-radius);
+  padding: 24px;
+  box-shadow: var(--shadow-def);
 }
 ```
 
@@ -167,16 +202,63 @@ Based on a 4px grid system:
 }
 
 .data-table th {
-  background: #F9FAFB;
-  font-weight: 600;
+  background: var(--surface-color);
+  font-weight: bold;
   text-align: left;
   padding: 12px;
-  border-bottom: 2px solid #E5E7EB;
+  border-bottom: var(--border-def);
 }
 
 .data-table td {
   padding: 12px;
-  border-bottom: 1px solid #E5E7EB;
+  border-bottom: var(--border-def);
+}
+```
+
+### Headings
+
+```css
+h1 {
+  font-family: var(--font-en);
+  font-size: var(--h1-size);
+  font-weight: bold;
+  color: var(--heading-color);
+  line-height: 1.2;
+  margin-bottom: 32px;
+}
+
+h2 {
+  font-family: var(--font-en);
+  font-size: var(--h2-size);
+  font-weight: bold;
+  color: var(--heading-color);
+  line-height: 1.2;
+  margin-bottom: 24px;
+}
+
+h3 {
+  font-family: var(--font-en);
+  font-size: var(--h3-size);
+  font-weight: bold;
+  color: var(--heading-color);
+  line-height: 1.2;
+  margin-bottom: 16px;
+}
+```
+
+### Body Text
+
+```css
+body, p {
+  font-family: var(--font-en);
+  font-size: var(--body-size);
+  color: var(--body-text-color);
+  line-height: 1.6;
+}
+
+.small {
+  font-size: var(--small-size);
+  color: var(--small-text-color);
 }
 ```
 
@@ -184,28 +266,25 @@ Based on a 4px grid system:
 
 ## Charts and Data Visualization
 
-### Chart Colors (Categorical)
+### Chart Colors
 
-For charts with multiple series, use this palette:
-
-| Order | Hex | Name |
-|-------|-----|------|
-| 1 | `#2563EB` | Blue |
-| 2 | `#10B981` | Green |
-| 3 | `#F59E0B` | Amber |
-| 4 | `#EF4444` | Red |
-| 5 | `#8B5CF6` | Purple |
-| 6 | `#EC4899` | Pink |
-| 7 | `#14B8A6` | Teal |
-| 8 | `#6366F1` | Indigo |
+| Order | Hex | Usage |
+|-------|-----|-------|
+| 1 | `#000000` | Primary series |
+| 2 | `#E98532` | Secondary series |
+| 3 | `#6C757D` | Tertiary series |
+| 4 | `#28A745` | Success/positive |
+| 5 | `#DC3545` | Error/negative |
+| 6 | `#17A2B8` | Info |
 
 ### Chart Styling Guidelines
 
-- **Grid lines**: Light gray (`#E5E7EB`), 1px
-- **Axis labels**: Gray 700 (`#374151`), 12px
-- **Legend**: Below chart, Gray 700 text
-- **Data labels**: Bold, contrasting color
+- **Grid lines**: Light gray (`#D0D0D0`), 1px
+- **Axis labels**: Body text color (`#333333`), 14px
+- **Legend**: Below chart, body text color
+- **Data labels**: Bold, heading color
 - **Background**: White or transparent
+- **Font**: Times New Roman for all text
 
 ---
 
@@ -215,21 +294,28 @@ For charts with multiple series, use this palette:
 
 - **Page size**: A4 or Letter (based on region)
 - **Margins**: 25mm minimum
+- **Font**: Times New Roman for English, Noto Serif SC for Chinese
 - **Header**: Company/logo left, page number right
 - **Footer**: Document title, date, confidentiality notice
+- **Headings**: Bold, H1=64px, H2=40px, H3=24px
+- **Body**: 18px, line-height 1.6
 
 ### Excel Spreadsheets
 
-- **Header row**: Bold, background color (Gray 100)
+- **Header row**: Bold, background color (Surface `#F8F9FA`)
+- **Font**: Times New Roman, 14px for data, 18px for headers
 - **Alternating rows**: Light striping for readability
 - **Number formatting**: Consistent decimal places
 - **Column widths**: Auto-fit to content
+- **Borders**: 1px solid #D0D0D0
 
 ### PowerPoint Presentations
 
 - **Slide size**: 16:9 widescreen
-- **Title font**: 36pt minimum
-- **Body font**: 24pt minimum
+- **Title font**: Times New Roman, 64px
+- **Heading font**: Times New Roman, 40px
+- **Body font**: Times New Roman, 24px
+- **Colors**: Black headings, #333333 body, #E98532 accents
 - **Contrast**: High contrast for accessibility
 
 ---
@@ -272,20 +358,37 @@ For charts with multiple series, use this palette:
 ### For Python Skills Generating Visualizations
 
 ```python
-# matplotlib style setup
+# matplotlib style setup with Times New Roman
 import matplotlib.pyplot as plt
 
-plt.style.use('default')
 plt.rcParams.update({
-    'font.family': 'sans-serif',
-    'font.size': 12,
-    'axes.titlesize': 14,
-    'axes.labelsize': 12,
+    'font.family': 'serif',
+    'font.serif': ['Times New Roman', 'DejaVu Serif'],
+    'font.size': 18,
+    'axes.titlesize': 24,
+    'axes.labelsize': 18,
+    'axes.titlesize': 40,
+    'xtick.labelsize': 14,
+    'ytick.labelsize': 14,
+    'legend.fontsize': 14,
     'figure.figsize': (10, 6),
     'figure.dpi': 100,
     'savefig.dpi': 300,
     'savefig.bbox': 'tight',
+    'axes.edgecolor': '#000000',
+    'axes.linewidth': 1,
+    'grid.color': '#D0D0D0',
 })
+
+# Color palette
+COLORS = {
+    'primary': '#000000',
+    'secondary': '#E98532',
+    'tertiary': '#6C757D',
+    'success': '#28A745',
+    'error': '#DC3545',
+    'info': '#17A2B8',
+}
 ```
 
 ### For HTML Output Skills
@@ -299,15 +402,48 @@ plt.rcParams.update({
   <title>Document Title</title>
   <style>
     :root {
-      --color-primary: #2563EB;
-      --color-text: #111827;
-      --font-sans: system-ui, -apple-system, sans-serif;
+      /* Typography */
+      --font-en: 'Times New Roman', Times, serif;
+      --font-zh: '/home/dave/skill-generator/assets/Noto_Serif_SC';
+
+      /* Colors */
+      --primary-color: #000000;
+      --secondary-color: #E98532;
+      --bg-color: #ffffff;
+      --surface-color: #f8f9fa;
+
+      /* Text */
+      --heading-color: #000000;
+      --body-text-color: #333333;
+      --small-text-color: #5c5c5c;
+
+      /* Borders & Shadows */
+      --border-def: 1px solid #d0d0d0;
+      --border-radius: 0px;
+      --shadow-def: 0 4px 12px rgba(0, 0, 0, 0.06);
+
+      /* Font Sizes */
+      --h1-size: 64px;
+      --h2-size: 40px;
+      --h3-size: 24px;
+      --body-size: 18px;
+      --small-size: 14px;
     }
+
     body {
-      font-family: var(--font-sans);
-      color: var(--color-text);
-      line-height: 1.5;
+      font-family: var(--font-en);
+      font-size: var(--body-size);
+      color: var(--body-text-color);
+      line-height: 1.6;
+      background: var(--bg-color);
+      margin: 0;
+      padding: 0;
     }
+
+    h1 { font-size: var(--h1-size); color: var(--heading-color); font-weight: bold; }
+    h2 { font-size: var(--h2-size); color: var(--heading-color); font-weight: bold; }
+    h3 { font-size: var(--h3-size); color: var(--heading-color); font-weight: bold; }
+    .small { font-size: var(--small-size); color: var(--small-text-color); }
   </style>
 </head>
 <body>
@@ -324,11 +460,18 @@ Skills should support brand customization when generating outputs:
 
 ### Customizable Elements
 
-- **Primary color**: Allow users to specify brand color
+- **Primary color**: Allow users to specify brand color (default: #000000)
+- **Secondary color**: Allow users to specify accent color (default: #E98532)
 - **Logo**: Support custom logo insertion
-- **Fonts**: Allow font family overrides
+- **Fonts**: Allow font family overrides (default: Times New Roman)
 - **Tone**: Adjust language formality based on audience
 
 ### Default Behavior
 
 If no brand guidelines are provided, use the defaults defined in this document.
+
+### Chinese Font Support
+
+For documents containing Chinese text, use the Noto Serif SC font:
+- Path: `/home/dave/skill-generator/assets/Noto_Serif_SC`
+- Fallback: 'Noto Serif SC', 'Microsoft YaHei', serif

@@ -29,7 +29,7 @@
   - [x] PRD.md (approved)
   - [x] FLOW.md (approved)
   - [x] TECH_STACK.md (approved)
-  - [x] FRONTEND_GUIDELINES.md (created - awaiting review)
+  - [x] FRONTEND_GUIDELINES.md (updated with custom design system)
   - [ ] BACKEND_STRUCTURE.md (next)
   - [ ] IMPLEMENTATION_PLAN.md
   - [x] CLAUDE.md (initial version created)
@@ -39,7 +39,7 @@
 ---
 
 ## Next Up
-- FRONTEND_GUIDELINES.md review and approval, then BACKEND_STRUCTURE.md
+- FRONTEND_GUIDELINES.md approval, then BACKEND_STRUCTURE.md
 
 ---
 
