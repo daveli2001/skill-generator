@@ -29,6 +29,7 @@ wheels/
 requirements.txt
 venv/
 env/
+.venv/
 
 # IDE
 .vscode/

@@ -39,7 +39,7 @@
 ---
 
 ## Next Up
-- User to run demo chart script, then BACKEND_STRUCTURE.md
+- BACKEND_STRUCTURE.md (File 5 of Step 2: Plan)
 
 ---
 
@@ -56,3 +56,8 @@
   - Rule 6 enhanced: Must ask user permission before overwriting LESSONS.md content
   - Rule 7: Dependency installation must reference TECH_STACK.md first; ask user if not found
   - Rule 8: Git commit requires explicit user permission (no exceptions)
+- **Demo Chart Script:** Successfully ran scripts/create_demo_charts.py on 2026-03-03
+  - Created virtual environment (.venv) for Python dependencies
+  - Generated 17 chart types in demo_charts/ folder
+  - Created demo_charts_collection.docx Word document
+  - All charts use FRONTEND_GUIDELINES.md design system (Times New Roman, Black/Orange)

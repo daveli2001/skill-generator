@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Frontend Design System Demo - skill-generator</title>
+  <style>
+    /* ===== Light Theme (Default) ===== */
+    :root {
+      /* Typography */
+      --font-en: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      --font-zh: 'Noto Serif SC', serif;
+
+      /* Colors */
+      --primary-color: #000000;
+      --primary-light: #333333;
+      --secondary-color: #E98532;
+      --secondary-dark: #C97028;
+      --secondary-light: #F9A552;
+      --bg-color: #ffffff;
+      --surface-color: #f8f9fa;
+
+      /* Semantic Colors */
+      --success-color: #C7FFBC;
+      --warning-color: #FFF2CB;
+      --error-color: #FCD2CE;
+      --info-color: #BEE7FF;
+
+      /* Text */
+      --heading-color: #000000;
+      --body-text-color: #333333;
+      --small-text-color: #5c5c5c;
+
+      /* Borders & Shadows */
+      --border-def: 1px solid #d0d0d0;
+      --border-radius: 0px;
+      --shadow-def: 0 4px 12px rgba(0, 0, 0, 0.06);
+
+      /* Font Sizes */
+      --h1-size: 64px;
+      --h2-size: 40px;
+      --h3-size: 24px;
+      --body-size: 18px;
+      --small-size: 14px;
+    }
+
+    /* ===== Dark Theme ===== */
+    [data-theme="dark"] {
+      --primary-color: #ffffff;
+      --primary-light: #cccccc;
+      --secondary-color: #F9A552;
+      --secondary-dark: #E98532;
+      --secondary-light: #FFB97B;
+      --bg-color: #1a1a1a;
+      --surface-color: #2d2d2d;
+      --heading-color: #ffffff;
+      --body-text-color: #e0e0e0;
+      --small-text-color: #a0a0a0;
+      --border-def: 1px solid #404040;
+      --shadow-def: 0 4px 12px rgba(0, 0, 0, 0.3);
+
+      /* Semantic Colors - Dark Mode */
+      --success-color: #1e5a2e;
+      --warning-color: #5a4a2e;
+      --error-color: #5a2e2e;
+      --info-color: #2e4a5a;
+    }
+
+    /* ===== Glassmorphism Styles ===== */
+    .glass-card {
+      background: rgba(248, 249, 250, 0.7);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+      border-radius: 0px;
+      padding: 24px;
+    }
+
+    [data-theme="dark"] .glass-card {
+      background: rgba(45, 45, 45, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 0px;
+    }
+
+    /* ===== Base Styles ===== */
+    * {
+      box-sizing: border-box;
+      transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+    }
+
+    body {
+      font-family: var(--font-en);
+      font-size: var(--body-size);
+      color: var(--body-text-color);
+      line-height: 1.6;
+      background: var(--bg-color);
+      margin: 0;
+      padding: 0;
+    }
+
+    h1 { font-size: var(--h1-size); color: var(--heading-color); font-weight: bold; margin: 0 0 32px 0; }
+    h2 { font-size: var(--h2-size); color: var(--heading-color); font-weight: bold; margin: 0 0 24px 0; }
+    h3 { font-size: var(--h3-size); color: var(--heading-color); font-weight: bold; margin: 0 0 16px 0; }
+    .small { font-size: var(--small-size); color: var(--small-text-color); }
+
+    /* ===== Layout ===== */
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 48px 24px;
+    }
+
+    .section {
+      margin-bottom: 64px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+    }
+
+    /* ===== Theme Toggle ===== */
+    .theme-toggle {
+      position: fixed;
+      top: 24px;
+      right: 24px;
+      z-index: 1000;
+      display: flex;
+      gap: 8px;
+    }
+
+    .theme-btn {
+      padding: 12px 24px;
+      border: var(--border-def);
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: bold;
+      background: var(--surface-color);
+      color: var(--body-text-color);
+      transition: all 0.2s ease;
+    }
+
+    .theme-btn:hover {
+      background: var(--secondary-color);
+      color: #ffffff;
+      border-color: var(--secondary-color);
+    }
+
+    .theme-btn.active {
+      background: var(--secondary-color);
+      color: #ffffff;
+    }
+
+    /* ===== Color Palette Display ===== */
+    .color-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-top: 24px;
+    }
+
+    .color-card {
+      border: var(--border-def);
+      border-radius: var(--border-radius);
+      overflow: hidden;
+      box-shadow: var(--shadow-def);
+    }
+
+    .color-swatch {
+      height: 120px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    .color-info {
+      padding: 16px;
+      background: var(--surface-color);
+    }
+
+    .color-name {
+      font-weight: bold;
+      color: var(--heading-color);
+    }
+
+    .color-hex {
+      font-family: 'Courier New', monospace;
+      font-size: var(--small-size);
+      color: var(--small-text-color);
+    }
+
+    /* ===== Typography Scale ===== */
+    .typography-scale {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .type-sample {
+      padding: 16px;
+      border: var(--border-def);
+      border-radius: var(--border-radius);
+      background: var(--surface-color);
+    }
+
+    .type-label {
+      font-size: var(--small-size);
+      color: var(--small-text-color);
+      margin-bottom: 8px;
+    }
+
+    /* ===== Cards ===== */
+    .card {
+      background: var(--surface-color);
+      border: var(--border-def);
+      border-radius: var(--border-radius);
+      padding: 24px;
+      box-shadow: var(--shadow-def);
+    }
+
+    /* ===== Buttons ===== */
+    .btn {
+      padding: 12px 24px;
+      border: none;
+      border-radius: var(--border-radius);
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: bold;
+      transition: all 0.2s ease;
+    }
+
+    .btn-primary {
+      background: var(--primary-color);
+      color: var(--bg-color);
+    }
+
+    .btn-secondary {
+      background: var(--secondary-color);
+      color: #ffffff;
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 2px solid var(--secondary-color);
+      color: var(--secondary-color);
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    [data-theme="dark"] .btn-primary {
+      color: #000000;
+    }
+
+    /* ===== Tables ===== */
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 24px;
+    }
+
+    .data-table th {
+      background: var(--surface-color);
+      font-weight: bold;
+      text-align: left;
+      padding: 16px;
+      border-bottom: var(--border-def);
+      color: var(--heading-color);
+    }
+
+    .data-table td {
+      padding: 16px;
+      border-bottom: var(--border-def);
+      color: var(--body-text-color);
+    }
+
+    .data-table tr:hover {
+      background: var(--surface-color);
+    }
+
+    /* ===== Spacing Scale ===== */
+    .spacing-demo {
+      display: flex;
+      align-items: flex-end;
+      gap: 16px;
+      margin-top: 24px;
+    }
+
+    .spacing-box {
+      background: var(--secondary-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      font-weight: bold;
+      font-size: 12px;
+    }
+
+    /* ===== Semantic Colors ===== */
+    .badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 0px;
+      font-size: 12px;
+      font-weight: bold;
+      color: #000000;
+    }
+
+    .badge-success { background: var(--success-color); }
+    .badge-warning { background: var(--warning-color); }
+    .badge-error { background: var(--error-color); }
+    .badge-info { background: var(--info-color); }
+
+    /* Dark mode badges - use darker versions with white text */
+    [data-theme="dark"] .badge {
+      color: #ffffff;
+    }
+    [data-theme="dark"] .badge-success { background: #1e5a2e; }
+    [data-theme="dark"] .badge-warning { background: #5a4a2e; }
+    [data-theme="dark"] .badge-error { background: #5a2e2e; }
+    [data-theme="dark"] .badge-info { background: #2e4a5a; }
+
+    /* ===== Chart Placeholder ===== */
+    .chart-placeholder {
+      background: var(--surface-color);
+      border: var(--border-def);
+      border-radius: var(--border-radius);
+      padding: 32px;
+      text-align: center;
+      color: var(--small-text-color);
+    }
+
+    .chart-bars {
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      gap: 16px;
+      height: 200px;
+      margin-top: 24px;
+    }
+
+    .chart-bar {
+      width: 40px;
+      background: linear-gradient(to top, var(--secondary-color), var(--secondary-light));
+      border-radius: 0px;
+    }
+
+    /* ===== Footer ===== */
+    footer {
+      border-top: var(--border-def);
+      padding: 32px;
+      text-align: center;
+      color: var(--small-text-color);
+      font-size: var(--small-size);
+      margin-top: 64px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Theme Toggle -->
+  <div class="theme-toggle">
+    <button class="theme-btn active" onclick="setTheme('light')">☀️ Light</button>
+    <button class="theme-btn" onclick="setTheme('dark')">🌙 Dark</button>
+  </div>
+
+  <div class="container">
+    <!-- Header -->
+    <section class="section">
+      <h1>Frontend Design System</h1>
+      <p style="font-size: 20px; max-width: 600px;">
+        A comprehensive design system for skill-generator outputs.
+        Toggle between Light and Dark themes to see the color variations.
+        Try the Glassmorphism cards below!
+      </p>
+    </section>
+
+    <!-- Color Palette -->
+    <section class="section">
+      <h2>Color Palette</h2>
+      <div class="grid">
+        <div>
+          <h3>Primary Colors</h3>
+          <div class="color-grid">
+            <div class="color-card">
+              <div class="color-swatch" style="background: #000000; color: #ffffff;">Primary</div>
+              <div class="color-info">
+                <div class="color-name">Primary</div>
+                <div class="color-hex">#000000</div>
+              </div>
+            </div>
+            <div class="color-card">
+              <div class="color-swatch" style="background: #E98532; color: #ffffff;">Secondary</div>
+              <div class="color-info">
+                <div class="color-name">Secondary</div>
+                <div class="color-hex">#E98532</div>
+              </div>
+            </div>
+            <div class="color-card">
+              <div class="color-swatch" style="background: #C97028; color: #ffffff;">Dark</div>
+              <div class="color-info">
+                <div class="color-name">Secondary Dark</div>
+                <div class="color-hex">#C97028</div>
+              </div>
+            </div>
+            <div class="color-card">
+              <div class="color-swatch" style="background: #F9A552; color: #000000;">Light</div>
+              <div class="color-info">
+                <div class="color-name">Secondary Light</div>
+                <div class="color-hex">#F9A552</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <h3>Semantic Colors</h3>
+          <div class="color-grid">
+            <div class="color-card">
+              <div class="color-swatch" style="background: #C7FFBC; color: #000000;">Success</div>
+              <div class="color-info">
+                <div class="color-name">Success</div>
+                <div class="color-hex">#C7FFBC</div>
+              </div>
+            </div>
+            <div class="color-card">
+              <div class="color-swatch" style="background: #FFF2CB; color: #000000;">Warning</div>
+              <div class="color-info">
+                <div class="color-name">Warning</div>
+                <div class="color-hex">#FFF2CB</div>
+              </div>
+            </div>
+            <div class="color-card">
+              <div class="color-swatch" style="background: #FCD2CE; color: #000000;">Error</div>
+              <div class="color-info">
+                <div class="color-name">Error</div>
+                <div class="color-hex">#FCD2CE</div>
+              </div>
+            </div>
+            <div class="color-card">
+              <div class="color-swatch" style="background: #BEE7FF; color: #000000;">Info</div>
+              <div class="color-info">
+                <div class="color-name">Info</div>
+                <div class="color-hex">#BEE7FF</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Typography -->
+    <section class="section">
+      <h2>Typography</h2>
+      <div class="typography-scale">
+        <div class="type-sample">
+          <div class="type-label">H1 - 64px</div>
+          <h1>The quick brown fox jumps over the lazy dog</h1>
+        </div>
+        <div class="type-sample">
+          <div class="type-label">H2 - 40px</div>
+          <h2>The quick brown fox jumps over the lazy dog</h2>
+        </div>
+        <div class="type-sample">
+          <div class="type-label">H3 - 24px</div>
+          <h3>The quick brown fox jumps over the lazy dog</h3>
+        </div>
+        <div class="type-sample">
+          <div class="type-label">Body - 18px</div>
+          <p>The quick brown fox jumps over the lazy dog. This is body text with a comfortable line-height of 1.6 for optimal readability.</p>
+        </div>
+        <div class="type-sample">
+          <div class="type-label">Small - 14px</div>
+          <p class="small">The quick brown fox jumps over the lazy dog. This is small text used for captions, labels, and secondary information.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Glassmorphism Demo -->
+    <section class="section">
+      <h2>Glassmorphism Style</h2>
+      <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 48px; border-radius: 0px; margin-top: 24px;">
+        <div class="glass-card">
+          <h3>Glass Card</h3>
+          <p>This card uses the glassmorphism effect with backdrop blur and translucency. It works beautifully on gradient or colorful backgrounds.</p>
+          <div style="margin-top: 16px;">
+            <span class="badge badge-info">Modern</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Components -->
+    <section class="section">
+      <h2>Components</h2>
+
+      <h3>Buttons</h3>
+      <div style="display: flex; gap: 16px; margin-top: 16px;">
+        <button class="btn btn-primary">Primary Button</button>
+        <button class="btn btn-secondary">Secondary Button</button>
+        <button class="btn btn-outline">Outline Button</button>
+      </div>
+
+      <h3>Badges</h3>
+      <div style="margin-top: 16px;">
+        <span class="badge badge-success">Success</span>
+        <span class="badge badge-warning">Warning</span>
+        <span class="badge badge-error">Error</span>
+        <span class="badge badge-info">Info</span>
+      </div>
+
+      <h3>Cards</h3>
+      <div class="grid" style="margin-top: 16px;">
+        <div class="card">
+          <h3>Standard Card</h3>
+          <p>A clean, professional card with subtle shadow and border. Perfect for displaying content in a structured layout.</p>
+        </div>
+        <div class="card" style="border-left: 4px solid var(--secondary-color);">
+          <h3>Accent Card</h3>
+          <p>This card features a secondary color accent on the left side, drawing attention to important content.</p>
+        </div>
+      </div>
+
+      <h3>Data Table</h3>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Column 1</th>
+            <th>Column 2</th>
+            <th>Column 3</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Data Row 1</td>
+            <td>Sample Value</td>
+            <td>$1,234.56</td>
+            <td><span class="badge badge-success">Active</span></td>
+          </tr>
+          <tr>
+            <td>Data Row 2</td>
+            <td>Another Value</td>
+            <td>$789.00</td>
+            <td><span class="badge badge-warning">Pending</span></td>
+          </tr>
+          <tr>
+            <td>Data Row 3</td>
+            <td>Final Entry</td>
+            <td>$456.78</td>
+            <td><span class="badge badge-error">Inactive</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- Spacing -->
+    <section class="section">
+      <h2>Spacing Scale</h2>
+      <p class="small">Based on an 8px grid system</p>
+      <div class="spacing-demo">
+        <div class="spacing-box" style="width: 48px; height: 48px;">8px</div>
+        <div class="spacing-box" style="width: 96px; height: 96px;">16px</div>
+        <div class="spacing-box" style="width: 144px; height: 144px;">24px</div>
+        <div class="spacing-box" style="width: 192px; height: 192px;">32px</div>
+        <div class="spacing-box" style="width: 288px; height: 288px;">48px</div>
+        <div class="spacing-box" style="width: 384px; height: 384px;">64px</div>
+      </div>
+    </section>
+
+    <!-- Charts -->
+    <section class="section">
+      <h2>Data Visualization</h2>
+      <div class="chart-placeholder">
+        <h3>Chart Placeholder</h3>
+        <p>Charts created with matplotlib or plotly will follow the design system colors.</p>
+        <div class="chart-bars">
+          <div class="chart-bar" style="height: 60%;"></div>
+          <div class="chart-bar" style="height: 80%;"></div>
+          <div class="chart-bar" style="height: 45%;"></div>
+          <div class="chart-bar" style="height: 100%;"></div>
+          <div class="chart-bar" style="height: 70%;"></div>
+        </div>
+        <p class="small" style="margin-top: 16px;">Using Secondary and Secondary Light gradient</p>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <p>skill-generator Frontend Design System Demo</p>
+      <p class="small">Toggle between Light and Dark themes using the buttons in the top-right corner.</p>
+    </footer>
+  </div>
+
+  <script>
+    function setTheme(theme) {
+      if (theme === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      } else {
+        document.documentElement.removeAttribute('data-theme');
+      }
+
+      // Update button states
+      document.querySelectorAll('.theme-btn').forEach(btn => {
+        btn.classList.remove('active');
+      });
+      event.target.classList.add('active');
+    }
+  </script>
+</body>
+</html>

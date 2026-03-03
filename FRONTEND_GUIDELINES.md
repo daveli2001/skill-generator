@@ -23,12 +23,15 @@ Skills created by skill-generator should produce outputs that are:
 ```css
 :root {
   /* Typography */
-  --font-en: 'Times New Roman', Times, serif;
-  --font-zh: '/home/dave/skill-generator/assets/Noto_Serif_SC';
+  --font-en: '/home/dave/skill-generator/assets/Google_Sans_Flex,Noto_Serif_SC/Google_Sans_Flex/GoogleSansFlex-VariableFont_GRAD,ROND,opsz,slnt,wdth,wght';
+  --font-zh: '/home/dave/skill-generator/assets/Google_Sans_Flex,Noto_Serif_SC/Noto_Serif_SC/NotoSerifSC-VariableFont_wght.ttf';
 
   /* Colors */
   --primary-color: #000000;
+  --primary-light: #333333;
   --secondary-color: #E98532;
+  --secondary-dark: #C97028;
+  --secondary-light: #F9A552;
   --bg-color: #ffffff;
   --surface-color: #f8f9fa;
 
@@ -55,14 +58,128 @@ Skills created by skill-generator should produce outputs that are:
 
 ---
 
+## Alternative Themes
+
+### Dark Mode Theme
+
+For applications requiring a dark theme, use the following CSS custom properties:
+
+```css
+[data-theme="dark"] {
+  /* Colors */
+  --primary-color: #ffffff;
+  --secondary-color: #F9A552;
+  --secondary-dark: #E98532;
+  --secondary-light: #FFB97B;
+  --bg-color: #1a1a1a;
+  --surface-color: #2d2d2d;
+
+  /* Text Colors */
+  --heading-color: #ffffff;
+  --body-text-color: #e0e0e0;
+  --small-text-color: #a0a0a0;
+
+  /* Borders */
+  --border-def: 1px solid #404040;
+
+  /* Shadows */
+  --shadow-def: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+```
+
+**Dark Mode Color Palette:**
+
+| Name | Hex | Usage |
+|------|-----|-------|
+| Background | `#1a1a1a` | Main page background |
+| Surface | `#2d2d2d` | Cards, panels, elevated surfaces |
+| Border | `#404040` | Borders, dividers |
+| Primary Text | `#ffffff` | Headings, primary content |
+| Body Text | `#e0e0e0` | Main body content |
+| Secondary Text | `#a0a0a0` | Captions, labels |
+
+### Glassmorphism Style
+
+Glassmorphism adds a frosted glass effect with blur and translucency. Use for modern, layered interfaces.
+
+**Important:** All glassmorphism elements must use `border-radius: 0px` to maintain consistency with the design system's sharp-corner aesthetic.
+
+```css
+.glass {
+  /* Frosted glass background */
+  background: rgba(255, 255, 255, 0.1);
+
+  /* Blur effect */
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+
+  /* Consistent border - matches design system */
+  border: 1px solid rgba(255, 255, 255, 0.2);
+
+  /* Soft shadow */
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+
+  /* Sharp corners - consistent with design system */
+  border-radius: 0px;
+}
+
+/* Glassmorphism Card */
+.glass-card {
+  background: rgba(248, 249, 250, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+  border-radius: 0px;
+  padding: 24px;
+}
+
+/* Dark mode glassmorphism */
+[data-theme="dark"] .glass {
+  background: rgba(45, 45, 45, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+  border-radius: 0px;
+}
+
+[data-theme="dark"] .glass-card {
+  background: rgba(45, 45, 45, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0px;
+}
+```
+
+**Glassmorphism Design Tokens:**
+
+| Property | Value | Usage |
+|----------|-------|-------|
+| Blur | 10-12px | Frosted glass effect |
+| Transparency | rgba(255,255,255,0.1-0.7) | Glass background |
+| Border | 1px solid rgba(255,255,255,0.1-0.3) | Consistent edge definition |
+| Shadow | 0 4px 30px rgba(0,0,0,0.08-0.5) | Depth and elevation |
+| Border Radius | 0px | Sharp corners (design system standard) |
+
+**When to Use Glassmorphism:**
+- Dashboard overlays and modals
+- Navigation bars with background content visible
+- Feature cards on gradient backgrounds
+- Data visualization overlays
+- Modern, premium-feeling interfaces
+
+**Accessibility Note:** Ensure sufficient contrast between glass elements and their backgrounds. Test with WCAG guidelines.
+
+---
+
 ## Color Palette
 
 ### Primary Colors
 
-| Name | Hex | RGB | Usage |
-|------|-----|-----|-------|
-| Primary | `#000000` | rgb(0, 0, 0) | Headings, primary text, borders |
-| Secondary | `#E98532` | rgb(233, 133, 50) | Accents, highlights, calls-to-action |
+| Name | Variable | Hex | RGB | Usage |
+|------|----------|-----|-----|-------|
+| Primary | `--primary-color` | `#000000` | rgb(0, 0, 0) | Headings, primary text, borders |
+| Secondary | `--secondary-color` | `#E98532` | rgb(233, 133, 50) | Accents, highlights, calls-to-action |
+| Secondary Dark | `--secondary-dark` | `#C97028` | rgb(201, 112, 40) | Darker accent, hover states, emphasis |
+| Secondary Light | `--secondary-light` | `#F9A552` | rgb(249, 165, 82) | Lighter accent, backgrounds, subtle highlights |
 
 ### Neutral Colors
 
@@ -82,12 +199,14 @@ Skills created by skill-generator should produce outputs that are:
 
 ### Semantic Colors
 
-| Name | Hex | Usage |
-|------|-----|-------|
-| Success | `#28A745` | Success states, positive values |
-| Warning | `#FFC107` | Warnings, cautions |
-| Error | `#DC3545` | Errors, negative values, deletions |
-| Info | `#17A2B8` | Informational messages |
+| Name | Hex | RGB | Usage |
+|------|-----|-----|-------|
+| Success | `#C7FFBC` | rgb(199, 255, 188) | Success states, positive values |
+| Warning | `#FFF2CB` | rgb(255, 242, 203) | Warnings, cautions |
+| Error | `#FCD2CE` | rgb(252, 210, 206) | Errors, negative values, deletions |
+| Info | `#BEE7FF` | rgb(190, 231, 255) | Informational messages |
+
+**Note:** These semantic colors use soft, pastel tones for large-area fills. For text and small elements, ensure sufficient contrast by using darker text colors on these backgrounds.
 
 ---
 
@@ -97,8 +216,8 @@ Skills created by skill-generator should produce outputs that are:
 
 | Font | Variable | Value | Usage |
 |------|----------|-------|-------|
-| English | `--font-en` | `'Times New Roman', Times, serif` | All English text |
-| Chinese | `--font-zh` | `/home/dave/skill-generator/assets/Noto_Serif_SC` | All Chinese text |
+| English | `--font-en` | `/home/dave/skill-generator/assets/Google_Sans_Flex,Noto_Serif_SC/Google_Sans_Flex/GoogleSansFlex-VariableFont_GRAD,ROND,opsz,slnt,wdth,wght` | All English text |
+| Chinese | `--font-zh` | `/home/dave/skill-generator/assets/Google_Sans_Flex,Noto_Serif_SC/Noto_Serif_SC/NotoSerifSC-VariableFont_wght.ttf` | All Chinese text |
 | Monospace | - | `'Courier New', Courier, monospace` | Code, data tables |
 
 ### Font Sizes
@@ -268,14 +387,39 @@ body, p {
 
 ### Chart Colors
 
-| Order | Hex | Usage |
-|-------|-----|-------|
-| 1 | `#000000` | Primary series |
-| 2 | `#E98532` | Secondary series |
-| 3 | `#6C757D` | Tertiary series |
-| 4 | `#28A745` | Success/positive |
-| 5 | `#DC3545` | Error/negative |
-| 6 | `#17A2B8` | Info |
+| Order | Hex | Variable | Usage |
+|-------|-----|----------|-------|
+| 1 | `#000000` | `--primary-color` | Primary series |
+| 2 | `#333333` | `--primary-light` | Primary light (large areas) |
+| 3 | `#E98532` | `--secondary-color` | Secondary series |
+| 4 | `#C97028` | `--secondary-dark` | Emphasis, darker accent |
+| 5 | `#F9A552` | `--secondary-light` | Lighter accent, backgrounds |
+| 6 | `#6C757D` | tertiary | Tertiary series |
+| 7 | `#C7FFBC` | `--success` | Success/positive values |
+| 8 | `#FCD2CE` | `--error` | Error/negative values |
+| 9 | `#BEE7FF` | `--info` | Informational elements |
+| 10 | `#FFF2CB` | `--warning` | Warning elements |
+
+### Chart Color Usage Guidelines
+
+**Large-Area Fills (use light colors):**
+- Bar charts, area charts, pie charts
+- Use `--primary-light`, `--secondary-light`, `--success`, `--error`, `--info`, `--warning`
+- These softer colors prevent visual fatigue when viewing large colored areas
+
+**Small-Area Fills (use normal colors):**
+- Line charts, scatter plots, point markers
+- Use `--primary-color`, `--secondary-color`, `--secondary-dark`
+- These stronger colors provide better visibility for thin lines and small elements
+
+**Example:**
+```python
+# Bar chart (large areas) - use light colors
+bar_colors = ['#333333', '#F9A552', '#C7FFBC', '#FCD2CE', '#BEE7FF']
+
+# Line chart (small areas) - use normal colors
+line_colors = ['#000000', '#E98532', '#C97028', '#6C757D']
+```
 
 ### Chart Styling Guidelines
 
@@ -284,7 +428,7 @@ body, p {
 - **Legend**: Below chart, body text color
 - **Data labels**: Bold, heading color
 - **Background**: White or transparent
-- **Font**: Times New Roman for all text
+- **Font**: Google Sans Flex for English, Noto Serif SC for Chinese
 
 ---
 
@@ -294,7 +438,7 @@ body, p {
 
 - **Page size**: A4 or Letter (based on region)
 - **Margins**: 25mm minimum
-- **Font**: Times New Roman for English, Noto Serif SC for Chinese
+- **Font**: Google Sans Flex for English, Noto Serif SC for Chinese
 - **Header**: Company/logo left, page number right
 - **Footer**: Document title, date, confidentiality notice
 - **Headings**: Bold, H1=64px, H2=40px, H3=24px
@@ -303,7 +447,7 @@ body, p {
 ### Excel Spreadsheets
 
 - **Header row**: Bold, background color (Surface `#F8F9FA`)
-- **Font**: Times New Roman, 14px for data, 18px for headers
+- **Font**: Google Sans Flex, 14px for data, 18px for headers
 - **Alternating rows**: Light striping for readability
 - **Number formatting**: Consistent decimal places
 - **Column widths**: Auto-fit to content
@@ -312,9 +456,9 @@ body, p {
 ### PowerPoint Presentations
 
 - **Slide size**: 16:9 widescreen
-- **Title font**: Times New Roman, 64px
-- **Heading font**: Times New Roman, 40px
-- **Body font**: Times New Roman, 24px
+- **Title font**: Google Sans Flex, 64px
+- **Heading font**: Google Sans Flex, 40px
+- **Body font**: Google Sans Flex, 24px
 - **Colors**: Black headings, #333333 body, #E98532 accents
 - **Contrast**: High contrast for accessibility
 
@@ -358,12 +502,12 @@ body, p {
 ### For Python Skills Generating Visualizations
 
 ```python
-# matplotlib style setup with Times New Roman
+# matplotlib style setup with Google Sans Flex
 import matplotlib.pyplot as plt
 
 plt.rcParams.update({
-    'font.family': 'serif',
-    'font.serif': ['Times New Roman', 'DejaVu Serif'],
+    'font.family': 'sans-serif',
+    'font.sans-serif': ['/home/dave/skill-generator/assets/Google_Sans_Flex,Noto_Serif_SC/Google_Sans_Flex/GoogleSansFlex-VariableFont_GRAD,ROND,opsz,slnt,wdth,wght', 'DejaVu Sans'],
     'font.size': 18,
     'axes.titlesize': 24,
     'axes.labelsize': 18,
@@ -383,11 +527,33 @@ plt.rcParams.update({
 # Color palette
 COLORS = {
     'primary': '#000000',
+    'primary_light': '#333333',
     'secondary': '#E98532',
+    'secondary_dark': '#C97028',
+    'secondary_light': '#F9A552',
     'tertiary': '#6C757D',
-    'success': '#28A745',
-    'error': '#DC3545',
-    'info': '#17A2B8',
+    'success': '#C7FFBC',
+    'error': '#FCD2CE',
+    'info': '#BEE7FF',
+    'warning': '#FFF2CB',
+}
+
+# Dark mode colors
+DARK_COLORS = {
+    'primary': '#ffffff',
+    'primary_light': '#cccccc',
+    'secondary': '#F9A552',
+    'secondary_dark': '#E98532',
+    'secondary_light': '#FFB97B',
+    'bg': '#1a1a1a',
+    'surface': '#2d2d2d',
+    'heading': '#ffffff',
+    'body_text': '#e0e0e0',
+    'small_text': '#a0a0a0',
+    'success': '#1e5a2e',
+    'error': '#5a2e2e',
+    'info': '#2e4a5a',
+    'warning': '#5a4a2e',
 }
 ```
 
@@ -401,14 +567,17 @@ COLORS = {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document Title</title>
   <style>
+    /* ===== Light Theme (Default) ===== */
     :root {
       /* Typography */
-      --font-en: 'Times New Roman', Times, serif;
-      --font-zh: '/home/dave/skill-generator/assets/Noto_Serif_SC';
+      --font-en: '/home/dave/skill-generator/assets/Google_Sans_Flex,Noto_Serif_SC/Google_Sans_Flex/GoogleSansFlex-VariableFont_GRAD,ROND,opsz,slnt,wdth,wght';
+      --font-zh: '/home/dave/skill-generator/assets/Google_Sans_Flex,Noto_Serif_SC/Noto_Serif_SC/NotoSerifSC-VariableFont_wght.ttf';
 
       /* Colors */
       --primary-color: #000000;
       --secondary-color: #E98532;
+      --secondary-dark: #C97028;
+      --secondary-light: #F9A552;
       --bg-color: #ffffff;
       --surface-color: #f8f9fa;
 
@@ -430,6 +599,53 @@ COLORS = {
       --small-size: 14px;
     }
 
+    /* ===== Dark Theme ===== */
+    [data-theme="dark"] {
+      --primary-color: #ffffff;
+      --secondary-color: #F9A552;
+      --secondary-dark: #E98532;
+      --secondary-light: #FFB97B;
+      --bg-color: #1a1a1a;
+      --surface-color: #2d2d2d;
+      --heading-color: #ffffff;
+      --body-text-color: #e0e0e0;
+      --small-text-color: #a0a0a0;
+      --border-def: 1px solid #404040;
+      --shadow-def: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    /* ===== Glassmorphism Styles ===== */
+    .glass {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+      border-radius: 16px;
+    }
+
+    .glass-card {
+      background: rgba(248, 249, 250, 0.7);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+      border-radius: 16px;
+      padding: 24px;
+    }
+
+    [data-theme="dark"] .glass {
+      background: rgba(45, 45, 45, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    [data-theme="dark"] .glass-card {
+      background: rgba(45, 45, 45, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    /* ===== Base Styles ===== */
     body {
       font-family: var(--font-en);
       font-size: var(--body-size);
@@ -448,6 +664,8 @@ COLORS = {
 </head>
 <body>
   <!-- Content -->
+  <!-- To enable dark mode, add: <html data-theme="dark"> -->
+  <!-- To use glassmorphism, add class="glass" or class="glass-card" to elements -->
 </body>
 </html>
 ```
@@ -463,7 +681,7 @@ Skills should support brand customization when generating outputs:
 - **Primary color**: Allow users to specify brand color (default: #000000)
 - **Secondary color**: Allow users to specify accent color (default: #E98532)
 - **Logo**: Support custom logo insertion
-- **Fonts**: Allow font family overrides (default: Times New Roman)
+- **Fonts**: Allow font family overrides (default: Google Sans Flex)
 - **Tone**: Adjust language formality based on audience
 
 ### Default Behavior

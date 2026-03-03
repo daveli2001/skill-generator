@@ -14,19 +14,35 @@ from docx.enum.text import WD_ALIGN_PARAGRAPH
 import os
 
 # Design System Colors
+# Primary colors
 PRIMARY_COLOR = '#000000'      # Black
+PRIMARY_LIGHT = '#333333'      # Primary light for large areas
 SECONDARY_COLOR = '#E98532'    # Orange
+SECONDARY_DARK = '#C97028'     # Darker Orange
+SECONDARY_LIGHT = '#F9A552'    # Lighter Orange
+
+# Semantic colors (updated for large-area fills)
+SUCCESS_COLOR = '#C7FFBC'      # Soft green
+ERROR_COLOR = '#FCD2CE'        # Soft red
+INFO_COLOR = '#BEE7FF'         # Soft blue
+WARNING_COLOR = '#FFF2CB'      # Soft yellow
+
 TERTIARY_COLOR = '#6C757D'     # Gray
-SUCCESS_COLOR = '#28A745'      # Green
-ERROR_COLOR = '#DC3545'        # Red
-INFO_COLOR = '#17A2B8'         # Cyan
 
 # Chart color palettes
-CHART_COLORS = [
-    PRIMARY_COLOR, SECONDARY_COLOR, TERTIARY_COLOR,
-    SUCCESS_COLOR, ERROR_COLOR, INFO_COLOR,
+# For large-area fills (bar charts, area charts, pie charts) - use light colors
+LARGE_AREA_COLORS = [
+    PRIMARY_LIGHT, SECONDARY_LIGHT, SUCCESS_COLOR, ERROR_COLOR, INFO_COLOR, WARNING_COLOR,
+    SECONDARY_COLOR, SECONDARY_DARK, TERTIARY_COLOR
+]
+
+# For small-area fills (line charts, scatter plots, markers) - use normal colors
+SMALL_AREA_COLORS = [
+    PRIMARY_COLOR, SECONDARY_COLOR, SECONDARY_DARK, TERTIARY_COLOR,
     '#8B5CF6', '#EC4899', '#14B8A6', '#6366F1'
 ]
+
+CHART_COLORS = SMALL_AREA_COLORS  # Default palette
 
 # Setup matplotlib with design system
 plt.rcParams.update({
@@ -276,11 +292,15 @@ def create_funnel_chart(chart_dir):
 
     fig, ax = plt.subplots(figsize=(10, 6))
 
+    # Use secondary color shades for gradient effect
+    funnel_colors = [SECONDARY_COLOR, SECONDARY_DARK, SECONDARY_LIGHT,
+                     SECONDARY_COLOR, SECONDARY_DARK, SECONDARY_LIGHT]
+
     for i, (stage, value) in enumerate(zip(stages, values)):
         width = value
         x = (100 - width) / 2
         ax.barh(stage, width, left=x, height=0.6,
-                color=CHART_COLORS[i % len(CHART_COLORS)])
+                color=funnel_colors[i])
         ax.text(50, i, f'{value}%', ha='center', va='center',
                 fontweight='bold', fontsize=12)
 

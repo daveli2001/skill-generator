@@ -174,6 +174,44 @@ Assistant: [runs git commit]
 
 ---
 
+### Rule 9: Frontend Development Must Follow FRONTEND_GUIDELINES.md
+
+**When creating any frontend content (HTML, CSS, JavaScript, charts, visualizations):**
+
+1. **Always** read and follow FRONTEND_GUIDELINES.md first
+2. **Must use** the defined design tokens:
+   - Colors (primary, secondary, semantic colors)
+   - Typography (fonts, sizes, weights)
+   - Spacing (8px grid system)
+   - Border radius (0px for sharp corners)
+   - Shadows and borders
+3. **Must apply** the correct theme support:
+   - Light theme (default)
+   - Dark theme (`[data-theme="dark"]`)
+   - Glassmorphism styles (if applicable)
+4. **Must use** the specified color variants:
+   - Light colors for large-area fills (bars, areas, pie segments)
+   - Normal/darker colors for small-area fills (lines, markers, points)
+5. **Must ensure** all badges, cards, and panels use consistent styling:
+   - `border-radius: 0px` (sharp corners)
+   - Consistent border definitions
+   - Proper dark mode color variations
+
+**Example:**
+```
+Creating HTML page → Read FRONTEND_GUIDELINES.md → Apply design tokens → Use correct colors → Ensure dark mode support
+```
+
+**Checklist before finalizing frontend content:**
+- [ ] Colors match FRONTEND_GUIDELINES.md palette
+- [ ] Typography uses specified fonts and sizes
+- [ ] Border radius is 0px (unless specified otherwise)
+- [ ] Dark mode styles are included
+- [ ] Semantic colors use the defined values
+- [ ] Chart colors follow large-area vs small-area guidelines
+
+---
+
 ## Project Context
 
 **Project Name:** skill-generator
