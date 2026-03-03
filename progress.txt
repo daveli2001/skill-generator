@@ -43,6 +43,11 @@
 
 ---
 
+## Next Up
+- BACKEND_STRUCTURE.md (File 5 of Step 2: Plan)
+
+---
+
 ## Session Notes
 - Initial session: Defined requirements through Q&A
 - Key decision: skill-generator is a Claude Code skill that creates other skills
@@ -56,8 +61,17 @@
   - Rule 6 enhanced: Must ask user permission before overwriting LESSONS.md content
   - Rule 7: Dependency installation must reference TECH_STACK.md first; ask user if not found
   - Rule 8: Git commit requires explicit user permission (no exceptions)
+  - Rule 9: Frontend development must follow FRONTEND_GUIDELINES.md
 - **Demo Chart Script:** Successfully ran scripts/create_demo_charts.py on 2026-03-03
   - Created virtual environment (.venv) for Python dependencies
   - Generated 17 chart types in demo_charts/ folder
   - Created demo_charts_collection.docx Word document
-  - All charts use FRONTEND_GUIDELINES.md design system (Times New Roman, Black/Orange)
+  - All charts use FRONTEND_GUIDELINES.md design system
+- **Design System Updates (2026-03-03):**
+  - Semantic colors updated to soft pastels (Success: #C7FFBC, Warning: #FFF2CB, Error: #FCD2CE, Info: #BEE7FF)
+  - Added primary-light color (#333333) for large-area fills
+  - Glassmorphism border-radius fixed to 0px (sharp corners)
+  - Chart color guidelines: light colors for large areas, normal colors for small areas
+  - Demo frontend page created with Light/Dark theme toggle
+  - Font changed to Google Sans Flex for English, Noto Serif SC for Chinese
+- **Git:** Commit pushed - "Add Rule 9: Frontend must follow FRONTEND_GUIDELINES.md"
