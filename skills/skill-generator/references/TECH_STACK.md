@@ -1,0 +1,424 @@
+# TECH_STACK.md - Technology Stack Specification
+
+## Overview
+
+This document defines the complete technology stack for skill-generator and all skills it creates. All versions are locked to ensure consistency and eliminate dependency ambiguity.
+
+---
+
+## Core Platform
+
+| Technology | Version | Purpose |
+|------------|---------|---------|
+| **Claude Code** | Latest | Host platform for skill execution |
+| **Git** | System default (2.x+) | Version control |
+| **Bash** | System default (5.x+) | Script execution |
+
+---
+
+## skill-generator Dependencies
+
+### Required Tools
+
+| Tool | Minimum Version | Purpose |
+|------|-----------------|---------|
+| Node.js | 18.x | Optional helper scripts |
+| Python | 3.9+ | Optional data processing scripts |
+| openpyxl | 3.1+ | Excel file reading (if needed) |
+| pandas | 2.0+ | Data manipulation (if needed) |
+
+### Optional Packages (for generated skills)
+
+| Package | Version | Use Case |
+|---------|---------|----------|
+| `pyyaml` | 6.0+ | YAML parsing for SKILL.md frontmatter |
+| `python-dotenv` | 1.0+ | Environment variable management |
+
+### Web Extraction (CRITICAL - MUST USE FIRECRAWL SKILL/CLI)
+
+| Tool | Version | Purpose |
+|------|---------|---------|
+| **firecrawl skill** | Latest | Web scraping and content extraction |
+| **firecrawl CLI** | Latest | Web scraping via CLI commands |
+
+**⚠️ PROHIBITED METHODS - NEVER USE:**
+- `firecrawl-py` Python SDK - DO NOT INSTALL
+- `requests` + `BeautifulSoup` - DO NOT USE for web scraping
+- `selenium`, `playwright` - DO NOT USE for web scraping
+- Any other web scraping library - DO NOT USE
+
+**When a skill needs web extraction, it MUST:**
+1. Load and use the firecrawl skill via Claude Code's Skill tool
+2. Or use firecrawl CLI: `firecrawl scrape -f markdown <url>`
+3. NEVER install `firecrawl-py` or any Python scraping library
+
+**Example in SKILL.md:**
+```yaml
+scripts:
+  - scripts/main.py
+# To scrape web content, load the firecrawl skill:
+# /skill firecrawl
+# Then use: firecrawl scrape -f markdown <url>
+```
+
+---
+
+## Standard Skill Library
+
+These are common dependencies available for skills created by skill-generator. Include only what each skill needs.
+
+### Office Document Manipulation
+
+| Package | Version | Purpose | File Formats |
+|---------|---------|---------|--------------|
+| `python-docx` | 1.1+ | Create, modify Word documents | .docx |
+| `pypdf` | 3.0+ | Read, write, merge PDFs | .pdf |
+| `python-pptx` | 0.6+ | Create, modify PowerPoint presentations | .pptx |
+| `openpyxl` | 3.1+ | Read, write Excel files | .xlsx, .xlsm |
+| `pandas` | 2.0+ | Data manipulation, CSV/Excel processing | .csv, .xlsx |
+| `xlrd` | 2.0+ | Read legacy Excel files | .xls |
+
+### Chart Creation
+
+| Package | Version | Purpose | Chart Types |
+|---------|---------|---------|-------------|
+| `matplotlib` | 3.7+ | Static charts | All standard chart types |
+| `plotly` | 5.15+ | Interactive charts | All types + dashboards |
+| `seaborn` | 0.12+ | Statistical charts | Statistical visualizations |
+
+**Supported Chart Types (non-exhaustive list):**
+- Combination bar and line charts
+- 100% stacked bar charts
+- Line charts
+- Pie charts
+- Radar charts
+- Mekko charts
+- Area charts
+- Scatter plots
+- Heatmaps
+- Histograms
+- Box plots
+- Violin plots
+- Funnel charts
+- Gauge charts
+- Treemaps
+- Sunburst charts
+- Waterfall charts
+- And any other chart type supported by matplotlib/plotly
+
+**Note:** The charting libraries (matplotlib, plotly) support a wide variety of chart types. The list above is not exhaustive - skills can create any chart type supported by these libraries based on user requirements.
+
+### Web Extraction
+
+| Tool | Version | Purpose | Requirement |
+|------|---------|---------|-------------|
+| `firecrawl` skill | Latest | **MANDATORY** - Web scraping via Firecrawl API | Required for all web extraction |
+
+#### Firecrawl Skill Setup (Required Web Extraction Tool)
+
+**Rule:** All skills created by skill-generator MUST use the firecrawl skill for web extraction. Other methods (requests, BeautifulSoup, firecrawl-py Python SDK, etc.) are NOT permitted for web scraping.
+
+**Setup:**
+1. Ensure FIRECRAWL_API_KEY is set in `.env` file
+2. Use the firecrawl skill via Claude Code's Skill tool
+
+**Basic Usage (in a skill script):**
+```python
+# Call the firecrawl skill through Claude Code
+# The firecrawl skill is invoked using the Skill tool
+```
+
+**CLI Usage:**
+```bash
+# The firecrawl CLI reads FIRECRAWL_API_KEY from environment
+export FIRECRAWL_API_KEY="your-api-key-here"
+
+# Scrape a single URL to markdown
+firecrawl scrape -f markdown "https://example.com"
+
+# Scrape with multiple formats (outputs JSON)
+firecrawl scrape -f markdown,html "https://example.com"
+
+# Save output to file
+firecrawl scrape -f markdown "https://example.com" -o output.md
+```
+
+**Environment Setup:**
+```bash
+# Get API key from https://www.firecrawl.dev/app
+# Store in .env file (never commit to git)
+FIRECRAWL_API_KEY=your-api-key-here
+```
+
+**Usage in Skills:**
+When a skill needs to scrape web content, it should load and use the firecrawl skill directly via Claude Code's Skill tool. No wrapper scripts or subprocess calls are needed.
+
+**Web Scraping Flow:**
+
+```
+1. Skill needs to scrape a URL
+       ↓
+2. Load firecrawl skill (via Claude Code's Skill tool)
+       ↓
+3. Pass URL to firecrawl skill
+       ↓
+4. Firecrawl returns scraped content (markdown, HTML, etc.)
+       ↓
+5. Skill processes the content and returns results
+```
+
+**What TO Do:**
+- Load firecrawl skill via Claude Code's Skill tool
+- Pass URL and let firecrawl handle the scraping
+- Use the returned markdown/HTML content
+
+**What NOT to Do:**
+- Don't import `firecrawl-py` Python SDK
+- Don't use `requests` or `BeautifulSoup`
+- Don't write custom scrapers
+- Don't wrap firecrawl CLI in subprocess calls
+
+---
+
+## Skill Structure Requirements
+
+Every skill created by skill-generator MUST follow this structure:
+
+```
+[skill-name]/
+├── SKILL.md          # Required: Instructions with YAML frontmatter
+├── scripts/          # Optional: Executable code
+│   ├── *.py          # Python scripts (3.9+)
+│   └── *.sh          # Bash scripts (5.x+)
+├── references/       # Optional: Reference files of any type
+│   ├── *.md          # Markdown documentation
+│   ├── *.pdf         # PDF documents
+│   ├── *.docx        # Word documents
+│   ├── *.pptx        # PowerPoint presentations
+│   ├── *.xlsx        # Excel spreadsheets
+│   ├── *.csv         # CSV data files
+│   └── *             # Any other reference file type
+└── assets/           # Optional: Templates, fonts, icons
+    └── *             # Any asset files
+```
+
+**Note:** The `references/` folder can contain any file type that the skill needs to load and use, including but not limited to: PDF, DOCX, PPTX, XLSX, CSV, TXT, JSON, XML, images, and more.
+
+---
+
+## SKILL.md YAML Frontmatter Specification
+
+Every SKILL.md file MUST start with this YAML frontmatter:
+
+```yaml
+---
+name: [skill-name]
+version: 1.0.0
+description: [Brief description]
+author: [Author name]
+date: YYYY-MM-DD
+scripts:
+  - scripts/[script-name].py
+---
+```
+
+### Field Requirements
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `name` | string | Yes | Skill identifier (kebab-case) |
+| `version` | semver | Yes | Version following semantic versioning |
+| `description` | string | Yes | One-line description |
+| `author` | string | Yes | Skill creator name |
+| `date` | date | Yes | Creation date (YYYY-MM-DD) |
+| `scripts` | array | No | List of script files to load |
+
+---
+
+## Script Execution Rules
+
+### Python Scripts
+- **Shebang:** `#!/usr/bin/env python3`
+- **Encoding:** UTF-8
+- **Minimum Version:** Python 3.9
+- **Dependencies:** Must be listed in `requirements.txt` if used
+
+### Bash Scripts
+- **Shebang:** `#!/bin/bash`
+- **Error Handling:** `set -euo pipefail` recommended
+- **Minimum Version:** Bash 5.x
+
+---
+
+## Security Requirements
+
+### Mandatory Security Rules
+
+1. **No Hardcoded Secrets**
+   - Credentials must use environment variables
+   - Use `.env` files (gitignored) for local development
+
+2. **Input Validation**
+   - All user inputs must be sanitized
+   - Use parameterized commands (no string concatenation for shell commands)
+
+3. **Path Safety**
+   - Use absolute paths with `os.path.abspath()` or `realpath`
+   - Validate paths are within expected directories
+
+4. **Command Injection Prevention**
+   - Never use `eval()` on user input
+   - Use `subprocess.run()` with list arguments (Python)
+   - Quote all variables in Bash (`"$var"` not `$var`)
+
+---
+
+## Git Configuration
+
+### Required Settings
+
+```bash
+# User identity (set per-project)
+git config user.name "[name]"
+git config user.email "[email]"
+
+# Line endings (cross-platform)
+git config core.autocrlf input  # macOS/Linux
+git config core.autocrlf true   # Windows
+
+# SSH key type
+ssh-keygen -t ed25519
+```
+
+### Branch Naming Convention
+
+| Branch Type | Prefix | Example |
+|-------------|--------|---------|
+| Main branch | `master` or `main` | `master` |
+| Feature | `feature/` | `feature/user-auth` |
+| Bug fix | `fix/` | `fix/login-error` |
+| Documentation | `docs/` | `docs/readme-update` |
+
+---
+
+## File Encoding and Formatting
+
+| File Type | Encoding | Line Endings |
+|-----------|----------|--------------|
+| Markdown (.md) | UTF-8 | LF (\n) |
+| Python (.py) | UTF-8 | LF (\n) |
+| Bash (.sh) | UTF-8 | LF (\n) |
+| YAML (.yml) | UTF-8 | LF (\n) |
+
+---
+
+## Version Update Policy
+
+- **skill-generator core:** Versions are locked; updates require explicit user approval
+- **Generated skills:** Each skill manages its own versioning via SKILL.md frontmatter
+- **Security patches:** Apply immediately with user notification
+
+---
+
+## Dependency Management
+
+### For Python Scripts
+
+Create `scripts/requirements.txt` with only the dependencies your skill needs:
+
+**Minimal Template (web extraction only):**
+```
+python-dotenv==1.0.0
+pyyaml==6.0.1
+```
+
+**Note:** Web extraction uses the firecrawl CLI/skill, not a Python package. Ensure FIRECRAWL_API_KEY is set in .env.
+
+**Office Documents Template:**
+```
+python-docx==1.1.0
+pypdf==3.17.0
+python-pptx==0.6.23
+openpyxl==3.1.2
+pandas==2.1.4
+```
+
+**Charting Template:**
+```
+matplotlib==3.8.2
+plotly==5.18.0
+pandas==2.1.4
+```
+
+**Full Template (all features):**
+```
+# Web extraction (MANDATORY - uses firecrawl CLI/skill, no Python package needed)
+# Ensure FIRECRAWL_API_KEY is set in .env
+
+# Office documents
+python-docx==1.1.0
+pypdf==3.17.0
+python-pptx==0.6.23
+openpyxl==3.1.2
+pandas==2.1.4
+
+# Charting
+matplotlib==3.8.2
+plotly==5.18.0
+
+# Utilities
+pyyaml==6.0.1
+python-dotenv==1.0.0
+```
+
+Install with:
+```bash
+pip install -r scripts/requirements.txt
+```
+
+### For Node.js Scripts (if used)
+
+Create `package.json`:
+```json
+{
+  "name": "skill-scripts",
+  "version": "1.0.0",
+  "dependencies": {
+    "yaml": "^2.3.0"
+  }
+}
+```
+
+Install with:
+```bash
+npm install
+```
+
+---
+
+## Prohibited Technologies
+
+The following are NOT allowed in skill-generator or generated skills:
+
+| Technology | Reason |
+|------------|--------|
+| `eval()` on user input | Security vulnerability |
+| Unquoted shell variables | Word splitting risks |
+| Hardcoded credentials | Security risk |
+| External APIs without user consent | Privacy violation |
+| Non-open-source dependencies | Licensing issues |
+| `requests`/`BeautifulSoup` for web scraping | Must use Firecrawl skill instead |
+| `firecrawl-py` Python SDK | Must use firecrawl CLI/skill instead |
+
+---
+
+## Tool Compatibility Matrix
+
+| Tool | macOS | Linux | Windows (WSL) | Windows (Native) |
+|------|-------|-------|---------------|------------------|
+| Bash | ✅ | ✅ | ✅ (WSL) | ⚠️ (Git Bash only) |
+| Python 3.9+ | ✅ | ✅ | ✅ (WSL) | ⚠️ (Path issues) |
+| Git | ✅ | ✅ | ✅ (WSL) | ✅ |
+| Claude Code | ✅ | ✅ | ✅ (WSL) | ⚠️ (Limited) |
+
+**Recommendation:** Use WSL or macOS/Linux for best compatibility.

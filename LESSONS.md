@@ -231,6 +231,109 @@ python3 scripts/create_demo_charts.py
 
 ---
 
+## Lesson 14: Never Skip Sub-Step Approval in Step 4 (Pre-launch Check)
+**Date:** 2026-03-04
+**Trigger:** Assistant completed Step 4.1, 4.2, and 4.3 in a single message without asking for user approval after each sub-step.
+
+**Problem:** The assistant displayed all three Step 4 sub-steps (Documentation Review, Code Review, Final Testing) together and only asked for approval at the end. This violates Rule 11 in CLAUDE.md which explicitly requires checklist + permission request after EVERY sub-step (4.1 → 4.2 → 4.3).
+
+**Solution:**
+- Stopped and acknowledged the violation immediately
+- Updated CLAUDE.md Rule 11 to explicitly state: "**NEVER batch multiple sub-steps together - each sub-step (e.g., 4.1, 4.2, 4.3) requires its own checklist + approval before proceeding to the next**"
+- Added "VIOLATION CONSEQUENCE" section specifying what to do if approval is skipped
+- Updated both CLAUDE.md (root) and references/CLAUDE.md (in skill folder)
+
+**Rule Added to CLAUDE.md:**
+> **VIOLATION CONSEQUENCE:** If you skip approval for any sub-step, you MUST:
+> 1. Acknowledge the violation immediately
+> 2. Stop and display the missed checklist
+> 3. Wait for explicit user approval before continuing
+> 4. Document the incident in LESSONS.md
+
+---
+
+## Lesson 15: Must "Dogfood" skill-generator Before Launch (CRITICAL)
+**Date:** 2026-03-04
+**Trigger:** User discovered that skill-generator was NOT actually tested by using it to create a skill. The assistant only tested helper scripts (main.py init command), not the full skill workflow.
+
+**Problem:**
+- Step 4.3 (Final Testing) only tested `scripts/main.py` commands
+- The skill-generator skill itself was NEVER used to create a skill
+- All files were created directly via Bash/Write tools, not through the skill's conversational flow
+- This violates the intent of Step 4.3: "skill-generator MUST load the created skill and run a real use case"
+
+**Solution:**
+- Added Rule 9 to SKILL.md: "Before launch, skill-generator MUST be tested by creating at least one complete skill using its own conversational flow"
+- Step 4.3 checklist now requires: "Skill tested by creating a real skill using its own triggers and workflow"
+- Test output must be preserved for user verification (not in /tmp/ which gets cleaned)
+
+**Rule Added to SKILL.md:**
+> **Rule 9: Dogfooding Requirement (Pre-launch)** - Before Step 5 (Launch), skill-generator MUST be tested by creating at least one complete skill using its own conversational flow. The test skill output must be preserved for user verification.
+
+---
+
+## Lesson 16: Never Install firecrawl-py - Use Firecrawl Skill/CLI Only
+**Date:** 2026-03-04
+**Trigger:** User instruction to ensure skill-generator and all generated skills use firecrawl skill/CLI, not Python SDK.
+
+**Problem:**
+- There's a risk that generated skills might try to install `firecrawl-py` Python SDK
+- Using Python SDK defeats the purpose - firecrawl is meant to be used as a Claude Code skill or CLI tool
+- Python web scraping libraries (`requests`, `BeautifulSoup`, etc.) are unreliable and break easily
+
+**Solution:**
+- Updated TECH_STACK.md: `firecrawl-py` is PROHIBITED, only firecrawl skill/CLI allowed
+- Updated SKILL.md Rule 4: Explicitly prohibits firecrawl-py, selenium, playwright, scrapy
+- Updated CLAUDE.md Rule 4: Added prohibited technologies table
+- When a skill needs web extraction, it must load the firecrawl skill via `/skill firecrawl`
+
+**Rule Added to TECH_STACK.md:**
+> **Web Extraction (CRITICAL - MUST USE FIRECRAWL SKILL/CLI):** NEVER install `firecrawl-py` Python SDK. Use firecrawl skill or CLI: `firecrawl scrape -f markdown <url>`
+
+---
+
+## Lesson 17: Core Context Files Must Be Created at Start of Step 0
+**Date:** 2026-03-04
+**Trigger:** User instruction to ensure CLAUDE.md, LESSONS.md, and progress.txt are created at the very beginning of Step 0.
+
+**Problem:**
+- Without CLAUDE.md, there are no rules to guide the process
+- Without LESSONS.md, past mistakes won't be captured
+- Without progress.txt, there's no way to track current status
+- These files must exist BEFORE any verification or skill creation begins
+
+**Solution:**
+- Added Step 0.0: Create Core Context Files (MUST BE FIRST)
+- Step 0.0 must be completed before Step 0.1 (Verify Core Platform)
+- All three files (CLAUDE.md, LESSONS.md, progress.txt) must be verified before proceeding
+- Updated IMPLEMENTATION_PLAN.md, SKILL.md, and CLAUDE.md
+
+**Rule Added to IMPLEMENTATION_PLAN.md:**
+> **Step 0.0: Create Core Context Files (MUST BE FIRST)** - Create CLAUDE.md with base rules, progress.txt initialized to Step 0, and LESSONS.md with template. Verify all three files exist before proceeding to Step 0.1.
+
+---
+
+## Lesson 18: Remove skill-generator Root .env for Security
+**Date:** 2026-03-04
+**Trigger:** User security concern about storing API keys at skill-generator level.
+
+**Problem:**
+- skill-generator creates skills but doesn't use APIs itself
+- Storing FIRECRAWL_API_KEY in skill-generator's `.env` is unnecessary
+- Security risk: one compromised location affects all generated skills
+- Each skill should have its OWN isolated `.env` file
+
+**Solution:**
+- Deleted `/home/dave/skill-generator/.env`
+- Updated Step 0.3: "Verify Skill-Generator Configuration" (no API key checks)
+- Each generated skill creates its own `.env` with its own API keys
+- Updated CLAUDE.md: "FIRECRAWL_API_KEY should be in each generated skill's `.env` file, NOT in skill-generator"
+
+**Security Principle:**
+> skill-generator is a meta-tool - it creates skills but doesn't execute them. API keys belong in each generated skill's isolated `.env` file, not at the framework level.
+
+---
+
 ## Lessons Learned (Future entries will be added here)
 
 ### Template for New Lessons:

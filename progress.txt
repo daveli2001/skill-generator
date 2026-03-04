@@ -1,8 +1,9 @@
 # skill-generator Progress Tracker
 
 ## Current Status
-**Current Step:** Step 2: Plan - In Progress
+**Current Step:** Step 3: Build - In Progress 🔄
 **Date:** 2026-03-03
+**Next:** Step 3.1: Initialize Skill Structure
 
 ---
 
@@ -21,30 +22,33 @@
   - Remote: git@github.com:daveli2001/skill-generator.git
   - SSH key generated and configured
   - Initial commit completed and pushed to master
+- [x] Step 2: Plan - All specification files created and approved
+  - PRD.md, FLOW.md, TECH_STACK.md, FRONTEND_GUIDELINES.md
+  - BACKEND_STRUCTURE.md, IMPLEMENTATION_PLAN.md, CLAUDE.md
+  - progress.txt, LESSONS.md
+- [x] Step 3: Build Plan Restructured
+  - IMPLEMENTATION_PLAN.md updated with simplified 5-step Build process
+  - Skill development location: /home/dave/skill-generator/skills/[skill-name]/
+  - Steps 3.5 (Reference Docs) and 3.6 (Assets) removed - references/assets collected in Step 3.2
 
 ---
 
 ## In Progress
-- [ ] Step 2: Plan - Creating specification files
-  - [x] PRD.md (approved)
-  - [x] FLOW.md (approved)
-  - [x] TECH_STACK.md (approved)
-  - [x] FRONTEND_GUIDELINES.md (updated with custom design system)
-  - [ ] BACKEND_STRUCTURE.md (next)
-  - [ ] IMPLEMENTATION_PLAN.md
-  - [x] CLAUDE.md (initial version created)
-  - [x] progress.txt (this file)
-  - [x] LESSONS.md
+- [ ] Step 3: Build - Implementing skill-generator
+  - [ ] Step 3.1: Initialize Skill Structure
+  - [ ] Step 3.2: Collect References & Assets from User
+  - [ ] Step 3.3: Create SKILL.md
+  - [ ] Step 3.4: Create Scripts
+  - [ ] Step 3.5: Testing
 
 ---
 
 ## Next Up
-- BACKEND_STRUCTURE.md (File 5 of Step 2: Plan)
-
----
-
-## Next Up
-- BACKEND_STRUCTURE.md (File 5 of Step 2: Plan)
+- Step 3.1: Initialize Skill Structure
+  - Create skill folder in `/home/dave/skill-generator/skills/skill-generator/`
+  - Create subdirectories: scripts/, references/, assets/
+  - Create .env with required environment variables
+  - Create .gitignore with standard rules
 
 ---
 
@@ -74,4 +78,5 @@
   - Chart color guidelines: light colors for large areas, normal colors for small areas
   - Demo frontend page created with Light/Dark theme toggle
   - Font changed to Google Sans Flex for English, Noto Serif SC for Chinese
-- **Git:** Commit pushed - "Add Rule 9: Frontend must follow FRONTEND_GUIDELINES.md"
+- **Git:** All commits pushed successfully
+- **Step 2: Plan Complete:** All 9 specification files created and approved

@@ -1,0 +1,236 @@
+# Progress Tracker
+
+## Skill: Amazon Product Extractor
+
+**Created:** 2026-03-04
+
+**Status:** COMPLETE - v1.0.0 Released
+
+**Deployed:** ~/.claude/skills/amazon-product-extractor/
+
+---
+
+## Completed Steps
+
+### Step 1: Ask - Requirements Discovery
+
+**Status:** Complete ✓
+
+**Summary:**
+- Target users: All co-workers
+- Core action: Extract product info from Amazon URLs
+- Input: Single or batch URLs
+- Output: XLSX file in current directory
+- Fields: 27 product specifications
+- Error handling: Retry once, then notify user
+- Amazon region: US only (amazon.com)
+
+**Approval:** User confirmed on 2026-03-04
+
+---
+
+### Step 2: Plan - Specification Documents
+
+**Status:** Complete ✓
+
+**Documents:**
+- [x] PRD.md - Product requirements document
+- [x] FLOW.md - User flows and navigation paths
+- [x] TECH_STACK.md - Technical specifications (firecrawl API)
+- [x] FRONTEND_GUIDELINES.md - Design system (CLI output format)
+- [ ] BACKEND_STRUCTURE.md - Data structures (SKIPPED - per user request)
+- [x] IMPLEMENTATION_PLAN.md - Step-by-step build sequence
+- [x] CLAUDE.md - AI operation manual (updated with full firecrawl guidance)
+- [x] progress.txt - This file
+- [x] LESSONS.md - Lessons learned (4 lessons documented)
+
+---
+
+### Step 3: Build - Implementation
+
+**Status:** Complete ✓
+
+**Completed:**
+- [x] Step 3.1: Create directory structure
+- [x] Step 3.2: Create .env file (with FIRECRAWL_API_KEY)
+- [x] Step 3.3: Create .gitignore
+- [x] Step 3.4: Create requirements.txt
+- [x] Step 3.5: Create scripts/main.py with:
+  - [x] firecrawl API integration (curl to /v1/scrape)
+  - [x] URL validation (Amazon.com only)
+  - [x] Retry logic (2 attempts)
+  - [x] 27-field extraction with JSON schema
+  - [x] XLSX output with openpyxl
+  - [x] CLI argument parsing
+  - [x] Error handling and user feedback
+- [x] Step 3.6: Test extraction - SUCCESSFUL
+
+**Test Results (2026-03-04):**
+```
+URL: https://www.amazon.com/Soundcore-AeroClip.../dp/B0DN6B3Z6Z/
+Extracted: Soundcore - AeroClip by Anker
+All 27 fields populated:
+  - Brand: Soundcore
+  - Product Name: AeroClip by Anker
+  - ASIN: B0DN6B3Z6Z
+  - Price: $109.99
+  - Battery Life: 24 hours
+  - Bluetooth Version: 5.4
+  - Customer Reviews: 4.4 out of 5 stars
+  - ... (all fields extracted)
+```
+
+---
+
+## Problem-Solving Journey (Firecrawl Integration)
+
+### Timeline of Issues and Solutions
+
+| # | Problem | Attempted Solution | Result | Final Solution |
+|---|---------|-------------------|--------|----------------|
+| 1 | User said use firecrawl skill, not library | Used `firecrawl scrape -f markdown` | ✗ Only navigation data | Use API extract mode |
+| 2 | No product data in output | Tried `--only-main-content` | ✗ Same issue | Schema-based extraction |
+| 3 | Still no data | Tried `--country US` | ✗ Same issue | JSON schema with types |
+| 4 | CLI needs interactive auth | Tried `-k` flag, env var | ✗ Prompts for login | Use curl directly |
+| 5 | API error on first call | Had `cache: false` param | ✗ BAD_REQUEST | Remove invalid param |
+| 6 | Final working approach | curl + extract + schema | ✓ SUCCESS | Documented in LESSONS.md |
+
+### Key Learnings
+
+1. **firecrawl CLI** has interactive auth that breaks scripts
+2. **Standard scrape** returns navigation only (Amazon anti-bot)
+3. **Extract mode** with JSON schema works reliably
+4. **curl** is more reliable than CLI for automation
+5. **API parameters** must match docs exactly (no `cache: false`)
+
+### Decision Tree for Future Reference
+
+```
+Need to scrape Amazon?
+│
+├─ firecrawl CLI?
+│  └─ NO: Interactive auth prompts break scripts
+│
+├─ firecrawl-py library?
+│  └─ NO: Requires pip install, user said no
+│
+├─ requests + BeautifulSoup?
+│  └─ NO: Won't bypass Amazon anti-bot
+│
+└─ firecrawl API via curl with extract mode?
+   └─ YES: This is the working approach!
+```
+
+---
+
+## Documentation Updates
+
+The following files were updated with the firecrawl problem-solving journey:
+
+| File | Content Added |
+|------|---------------|
+| **LESSONS.md** | 4 detailed lessons with timeline, testing table, decision tree |
+| **CLAUDE.md** | Complete working code, API format, debugging checklist |
+| **scripts/main.py** | firecrawl API integration via curl |
+| **TECH_STACK.md** | API endpoint, request/response format |
+| **progress.txt** | This problem-solving timeline |
+
+---
+
+## Next Up
+
+### Step 4: Pre-launch Check
+
+**Status:** Complete ✓
+
+**Completed:**
+- [x] Redundancy check - No conflicting logic found
+- [x] Security check - No vulnerabilities found
+- [x] Output quality check (dogfooding) - PASSED (3/3 URLs)
+
+**Test Results (2026-03-04 15:00):**
+```
+Batch Test: 3 URLs processed
+Product 1: Soundcore AeroFit 2 (B0DCZ2QFV8) - $79.98 ✓
+Product 2: Amazon Echo Dot 4th Gen (B07XJ8W2K5) - $49.99 ✓
+Product 3: Apple AirPods 3rd Gen (B09JQL3NWT) - $116.55 ✓
+All 27 fields extracted for each product
+```
+
+### Step 5: Launch
+
+**Status:** Complete ✓
+
+**Completed:**
+- [x] Deploy to ~/.claude/skills/amazon-product-extractor/
+- [x] Create git repository
+- [x] Create initial commit
+- [x] Tag v1.0.0
+
+**Git History:**
+```
+Commit: 7b22650
+Message: Initial release: Amazon Product Extractor v1.0.0
+Tag: v1.0.0
+Files: 12 files, 2729 insertions
+```
+
+**Deployed Structure:**
+```
+~/.claude/skills/amazon-product-extractor/
+├── .env                      (API key, gitignored)
+├── .gitignore                (excludes .env, *.xlsx)
+├── SKILL.md                  (main skill definition)
+├── requirements.txt          (Python dependencies)
+├── scripts/
+│   └── main.py               (extraction script)
+└── references/
+    ├── PRD.md                (requirements)
+    ├── FLOW.md               (user flows)
+    ├── TECH_STACK.md         (technical specs)
+    ├── FRONTEND_GUIDELINES.md (UI guidelines)
+    ├── IMPLEMENTATION_PLAN.md (build plan)
+    ├── CLAUDE.md             (operating rules)
+    ├── LESSONS.md            (lessons learned)
+    └── progress.txt          (this file)
+```
+
+---
+
+## Session Notes
+
+- User emphasized using firecrawl **skill** instead of firecrawl-py library
+- CLAUDE.md, LESSONS.md, and progress.txt created upfront (per user request)
+- Reference template: /home/dave/skill-generator/tests/cross_table_spec.xlsx (27 fields)
+- **Key discovery:** firecrawl CLI has auth issues; use API directly via curl
+- **Solution:** firecrawl API v1 /scrape with `formats: ["extract"]` and JSON schema
+- **Documentation:** All lessons recorded in LESSONS.md with timeline and decision tree
+
+---
+
+## File Structure
+
+```
+/home/dave/skill-generator/skills/amazon-product-extractor/
+├── .env                      ✓ Created (FIRECRAWL_API_KEY)
+├── .gitignore                ✓ Created
+├── requirements.txt          ✓ Created
+├── scripts/
+│   └── main.py               ✓ Created (tested successfully)
+├── SKILL.md                  ✓ Created
+└── references/
+    ├── PRD.md                ✓ Created
+    ├── FLOW.md               ✓ Created
+    ├── TECH_STACK.md         ✓ Created (firecrawl API)
+    ├── FRONTEND_GUIDELINES.md ✓ Created
+    ├── IMPLEMENTATION_PLAN.md ✓ Created
+    ├── CLAUDE.md             ✓ Created (full firecrawl guidance)
+    ├── LESSONS.md            ✓ Created (4 lessons + timeline)
+    └── progress.txt          ✓ Created (this file)
+```
+
+---
+
+## Next Action
+
+Proceed to Step 4: Pre-launch Check (redundancy, security, dogfooding)

@@ -7,22 +7,28 @@ This file contains rules and context that must be followed in every session.
 ## CRITICAL WORKFLOW RULES
 
 ### Rule 0: Create Core Files First (Step 1 Start)
+
 **At the beginning of Step 1: Ask, always create these core context files first:**
-- `CLAUDE.md` - Base rules and skill structure
+- `CLAUDE.md` - Base rules and skill structure (create this first if it doesn't exist)
 - `progress.txt` - Progress tracking initialized to Step 1
 - `LESSONS.md` - Template for future lessons
+
+**Note:** If CLAUDE.md already exists, skip creation and read it first for rules and context.
 
 These files provide the foundation for the entire skill creation process.
 
 ### Rule 1: Never Skip Steps
-**DO NOT jump to Step 2 (Plan) before the user confirms Step 1 (Ask) is complete.**
+
+**DO NOT jump to any step before the user confirms the previous step is complete.**
 
 The workflow MUST be followed in exact order:
+
 1. **Step 1: Ask** → Ask all clarifying questions → **WAIT for user confirmation**
 2. **Step 2: Plan** → Create files one by one → **WAIT for user approval before each file**
 3. **Step 3: Build** → Code step by step → **WAIT for user approval before each step**
 4. **Step 4: Pre-launch Check** → Run thorough checks → **WAIT for user confirmation**
-5. **Step 5: Debug** → Only activated when errors occur
+5. **Step 5: Launch** → Deploy and release → **WAIT for user approval before each step**
+6. **Maintenance** → Only activated after skill is launched
 
 ### Rule 2: Always Ask for Clarification
 - Never make assumptions about user requirements
@@ -37,12 +43,23 @@ The workflow MUST be followed in exact order:
 - API keys must always be loaded from environment variables, never hardcoded
 - Instruct users to create their own `.env` file with their API keys
 
-### Rule 4: Web Extraction Must Use Firecrawl Skill/CLI
+### Rule 4: Web Extraction Must Use Firecrawl Skill/CLI (CRITICAL)
 - **ALWAYS** use the firecrawl skill or firecrawl CLI for web extraction
 - **NEVER** attempt to install or use `firecrawl-py` Python SDK
 - **NEVER** use `requests` or `BeautifulSoup` for web scraping
+- **NEVER** use `selenium`, `playwright`, `scrapy` or other scraping libraries
 - CLI command: `firecrawl scrape -f markdown <url>`
-- Ensure FIRECRAWL_API_KEY is set in `.env` before using firecrawl
+- **Note:** FIRECRAWL_API_KEY should be in each generated skill's `.env` file, NOT in skill-generator
+- When creating skills that need web extraction, instruct users to load the firecrawl skill
+
+**Prohibited Technologies for Web Extraction:**
+| Tool | Status | Reason |
+|------|--------|--------|
+| `firecrawl-py` | PROHIBITED | Use firecrawl skill/CLI instead |
+| `requests` + `BeautifulSoup` | PROHIBITED | Unreliable, breaks easily |
+| `selenium` | PROHIBITED | Overkill, use firecrawl |
+| `playwright` | PROHIBITED | Overkill, use firecrawl |
+| `scrapy` | PROHIBITED | Overkill, use firecrawl |
 
 ### Rule 5: Documentation Updates (When Problems Are Solved)
 
@@ -59,16 +76,19 @@ The workflow MUST be followed in exact order:
    - **NEVER use `Write()` tool** - it replaces the entire file and deletes all existing lessons
    - **ALWAYS read LESSONS.md first** to verify all previous lessons are intact
    - **Verify** the file ends with "## Lessons Learned (Future entries...)" before editing
+   - **Before any edit that would overwrite content, ask user permission** (see Rule 6)
 
 2. **Update progress.txt** - Record the completed step:
    - Update current status and date
    - Mark completed items with [x]
    - Update "In Progress" and "Next Up" sections
    - Add session notes for important context
+   - **Preserve historical context** - do not remove past session notes
 
 3. **Update CLAUDE.md** - When a problem reveals a need for new/modified rules:
    - Add new rules under "CRITICAL WORKFLOW RULES"
    - Modify existing rules if they caused the issue
+   - **Preserve existing rules** unless they're being replaced
    - Requires user approval before committing rule changes
 
 **Order of Operations:**
@@ -78,36 +98,33 @@ The workflow MUST be followed in exact order:
 [If no problem:] Git Commit
 ```
 
-**Summary:**
-- Problem solved → Update files, then git commit
-- No problem solved → Git commit directly
-- **NEVER delete existing LESSONS.md content without user permission**
-
 **LESSONS.md Editing Checklist (MUST verify before committing):**
 - [ ] Read LESSONS.md first to see existing lessons
 - [ ] Used `Edit()` NOT `Write()` to add new lesson
 - [ ] All previous lessons (1, 2, 3...) are still present
 - [ ] New lesson is appended after existing lessons
 - [ ] File ends with "## Lessons Learned (Future entries will be added here)"
-
----
-
-### Rule 6: Never Delete Existing Content Without Permission
-
-**CRITICAL: When updating documentation files:**
-
-- **LESSONS.md:** NEVER delete or replace existing lessons. Always append new lessons after existing ones.
-- **progress.txt:** Update status and add notes, don't remove historical context.
-- **CLAUDE.md:** Modify rules only when necessary, preserve existing rules unless they're being replaced.
+- [ ] User permission obtained (if edit would overwrite any content)
 
 **If you accidentally delete content:**
 1. Acknowledge the mistake immediately
 2. Restore the deleted content
 3. Document the incident in LESSONS.md
 
-**LESSONS.md Specific Rule:**
-- Before editing LESSONS.md, always ask user for permission if the edit would overwrite or replace existing content
-- Never use Write() to replace the entire file - always use Edit() to append
+---
+
+### Rule 6: Never Delete Existing Content Without Permission
+
+**CRITICAL: When updating ANY documentation files:**
+
+| File | Rule |
+|------|------|
+| **LESSONS.md** | NEVER delete/replace lessons. Always append. Ask permission before any overwrite. |
+| **progress.txt** | Update status and add notes. Never remove historical context. |
+| **CLAUDE.md** | Modify rules only when necessary. Preserve existing rules unless replacing. |
+| **Any spec file** | Ask user: overwrite, merge, or skip? (see Rule 2) |
+
+**This rule reinforces Rule 5** - both must be followed for documentation updates.
 
 ---
 
@@ -209,6 +226,128 @@ Creating HTML page → Read FRONTEND_GUIDELINES.md → Apply design tokens → U
 - [ ] Dark mode styles are included
 - [ ] Semantic colors use the defined values
 - [ ] Chart colors follow large-area vs small-area guidelines
+
+---
+
+### Rule 10: Skill Folder Structure Rules
+
+**When creating skill folders in `~/.claude/skills/[skill-name]/`:**
+
+1. **NO README.md** - Do not create README.md inside skill folders
+2. **All documentation goes in SKILL.md or references/** - SKILL.md contains the main instructions with YAML frontmatter; additional docs go in references/
+3. **Standard structure:**
+   ```
+   [skill-name]/
+   ├── SKILL.md              # Required: Main skill definition
+   ├── scripts/              # Optional: Executable code
+   ├── references/           # Optional: Reference documentation
+   └── assets/               # Optional: Fonts, logos, templates
+   ```
+
+**Never:**
+- Include README.md in skill folders
+- Duplicate content between SKILL.md and references/
+
+---
+
+### Rule 11: Automatic Checklist Display + Permission Request (ALL PHASES)
+
+**After completing EVERY step in IMPLEMENTATION_PLAN.md, MUST automatically:**
+
+1. **Print the step completion checklist** for user examination
+2. **Display all checklist items** with their current status:
+   - `[x]` = Completed
+   - `[ ]` = Not completed / Not applicable
+3. **Ask for explicit user permission** to proceed to the next step
+4. **Wait for user confirmation** before proceeding
+
+**Checklist + Permission Request Format:**
+```
+═══════════════════════════════════════════════════════════
+  Step X.X: [Step Name] - COMPLETION CHECKLIST
+═══════════════════════════════════════════════════════════
+
+[x] Task 1 description - Completed
+[x] Task 2 description - Completed
+[ ] Task 3 description - Not applicable (if no assets needed)
+...
+
+═══════════════════════════════════════════════════════════
+  Status: X/Y tasks completed
+
+  Do you approve proceeding to Step X.Y: [Next Step Name]?
+  Type "approve" or "yes" to proceed, or report any issues.
+═══════════════════════════════════════════════════════════
+```
+
+**When to display checklists + permission requests (COMPLETE LIST - FROM START TO END):**
+
+**Step 0: Setup Verification**
+- After Step 0.0 (Create Core Context Files) - before Step 0.1
+- After Step 0.1 (Verify Core Platform) - before Step 0.2
+- After Step 0.2 (Verify Python Environment) - before Step 0.3
+- After Step 0.3 (Verify API Keys and Environment) - before Step 1
+- After Step 0 Completion - before starting Step 1
+
+**Step 1: Ask**
+- After Step 1.1 (Ask Who and What) - before Step 1.2
+- After Step 1.2 (Ask Data Requirements) - before Step 1.3
+- After Step 1.3 (Ask Error and Success Handling) - before Step 1.4
+- After Step 1.4 (Ask Technical Preferences) - before Step 2
+- After Step 1 Completion - before starting Step 2
+
+**Step 2: Plan**
+- After Step 2.1 (Create PRD.md) - before Step 2.2
+- After Step 2.2 (Create FLOW.md) - before Step 2.3
+- After Step 2.3 (Create TECH_STACK.md) - before Step 2.4
+- After Step 2.4 (Create FRONTEND_GUIDELINES.md) - before Step 2.5
+- After Step 2.5 (Create BACKEND_STRUCTURE.md) - before Step 2.6
+- After Step 2.6 (Create IMPLEMENTATION_PLAN.md) - before Step 2.7
+- After Step 2.7 (Create CLAUDE.md) - before Step 2.8
+- After Step 2.8 (Create progress.txt) - before Step 2.9
+- After Step 2.9 (Create LESSONS.md) - before Step 3
+- After Step 2 Completion - before starting Step 3
+
+**Step 3: Build**
+- After Step 3.1 (Initialize Skill Structure) - before Step 3.2
+- After Step 3.2 (Create SKILL.md) - before Step 3.3
+- After Step 3.3 (Collect References & Assets) - before Step 3.4
+- After Step 3.4 (Create Scripts) - before Step 3.5
+- After Step 3.5 (Create Reference Documentation) - before Step 3.6
+- After Step 3.6 (Create Assets) - before Step 3.7
+- After Step 3.7 (Testing) - before Step 4
+- After Step 3 Completion - before starting Step 4
+
+**Step 4: Pre-launch Check**
+- After Step 4.1 (Documentation Review) - before Step 4.2
+- After Step 4.2 (Code Review) - before Step 4.3
+- After Step 4.3 (Final Testing) - before Step 5
+- After Step 4 Completion - before starting Step 5
+
+**Step 5: Launch**
+- After Step 5.1 (Deploy Skill) - before Step 5.2
+- After Step 5.2 (Create Release) - before git push
+- After Step 5 Completion - skill is launched
+
+**Maintenance (Ongoing)**
+- After Step M.1 (Monitor Usage) - before Step M.2
+- After Step M.2 (Iterate and Improve) - before version release
+- After each update cycle
+
+**CRITICAL:**
+- Checklist + permission request MUST be shown together as one message
+- Never display checklist without asking for permission
+- Never ask for permission without showing checklist first
+- Never proceed without explicit user approval
+- **NEVER batch multiple sub-steps together - each sub-step (e.g., 4.1, 4.2, 4.3) requires its own checklist + approval before proceeding to the next**
+- **STRICTENED RULE: Whenever there is a sub-step, you MUST ask for user's permission to move along. Never batch steps or skip asking for permission. This applies to ALL phases and ALL sub-steps without exception.**
+- For git commits: Show checklist + permission request, then follow Rule 8 (separate git commit permission)
+
+**VIOLATION CONSEQUENCE:** If you skip approval for any sub-step, you MUST:
+1. Acknowledge the violation immediately
+2. Stop and display the missed checklist
+3. Wait for explicit user approval before continuing
+4. Document the incident in LESSONS.md
 
 ---
 
@@ -316,7 +455,16 @@ When setting up a new repository, follow these steps in order:
    ```
 
 ### Ongoing Git Operations
-- Commit after each function module is created
-- Commit after each specification file is approved
+
+**IMPORTANT: All commits require user permission per Rule 8**
+
+- Commit after each function module is created **(ask permission first)**
+- Commit after each specification file is approved **(ask permission first)**
 - Ask user before pushing to remote (unless already authorized)
+
+**Before every git commit, follow Rule 8:**
+1. Show user what will be committed (git status)
+2. Show proposed commit message
+3. Wait for explicit user approval
+4. Only then run git commit
 

@@ -31,9 +31,35 @@ This document defines the complete technology stack for skill-generator and all 
 
 | Package | Version | Use Case |
 |---------|---------|----------|
-| `requests` | 2.31+ | HTTP API calls in Python scripts |
 | `pyyaml` | 6.0+ | YAML parsing for SKILL.md frontmatter |
 | `python-dotenv` | 1.0+ | Environment variable management |
+
+### Web Extraction (CRITICAL - MUST USE FIRECRAWL SKILL/CLI)
+
+| Tool | Version | Purpose |
+|------|---------|---------|
+| **firecrawl skill** | Latest | Web scraping and content extraction |
+| **firecrawl CLI** | Latest | Web scraping via CLI commands |
+
+**⚠️ PROHIBITED METHODS - NEVER USE:**
+- `firecrawl-py` Python SDK - DO NOT INSTALL
+- `requests` + `BeautifulSoup` - DO NOT USE for web scraping
+- `selenium`, `playwright` - DO NOT USE for web scraping
+- Any other web scraping library - DO NOT USE
+
+**When a skill needs web extraction, it MUST:**
+1. Load and use the firecrawl skill via Claude Code's Skill tool
+2. Or use firecrawl CLI: `firecrawl scrape -f markdown <url>`
+3. NEVER install `firecrawl-py` or any Python scraping library
+
+**Example in SKILL.md:**
+```yaml
+scripts:
+  - scripts/main.py
+# To scrape web content, load the firecrawl skill:
+# /skill firecrawl
+# Then use: firecrawl scrape -f markdown <url>
+```
 
 ---
 
