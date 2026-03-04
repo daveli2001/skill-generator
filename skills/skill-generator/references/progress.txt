@@ -1,0 +1,82 @@
+# skill-generator Progress Tracker
+
+## Current Status
+**Current Step:** Step 3: Build - In Progress 🔄
+**Date:** 2026-03-03
+**Next:** Step 3.1: Initialize Skill Structure
+
+---
+
+## Completed
+- [x] Step 1: Ask - All clarifying questions asked and answered
+  - Target users: Non-technical users with domain expertise
+  - Core action: Iterative conversation to refine process agents
+  - Output: Documentation + Implementation + Git repository
+  - Framework: Anthropic's agent framework (Claude Code skills)
+  - Integration: A skill within Claude Code
+  - Structure: Follows new-output-folder-structure.png
+  - Process: Iterative with user approval at each step
+  - Skill output location: ~/.claude/skills/[skill-name]/
+- [x] Git Repository Initialized and Linked
+  - User: daveli2001 <zeyu.li.2001@foxmail.com>
+  - Remote: git@github.com:daveli2001/skill-generator.git
+  - SSH key generated and configured
+  - Initial commit completed and pushed to master
+- [x] Step 2: Plan - All specification files created and approved
+  - PRD.md, FLOW.md, TECH_STACK.md, FRONTEND_GUIDELINES.md
+  - BACKEND_STRUCTURE.md, IMPLEMENTATION_PLAN.md, CLAUDE.md
+  - progress.txt, LESSONS.md
+- [x] Step 3: Build Plan Restructured
+  - IMPLEMENTATION_PLAN.md updated with simplified 5-step Build process
+  - Skill development location: /home/dave/skill-generator/skills/[skill-name]/
+  - Steps 3.5 (Reference Docs) and 3.6 (Assets) removed - references/assets collected in Step 3.2
+
+---
+
+## In Progress
+- [ ] Step 3: Build - Implementing skill-generator
+  - [ ] Step 3.1: Initialize Skill Structure
+  - [ ] Step 3.2: Collect References & Assets from User
+  - [ ] Step 3.3: Create SKILL.md
+  - [ ] Step 3.4: Create Scripts
+  - [ ] Step 3.5: Testing
+
+---
+
+## Next Up
+- Step 3.1: Initialize Skill Structure
+  - Create skill folder in `/home/dave/skill-generator/skills/skill-generator/`
+  - Create subdirectories: scripts/, references/, assets/
+  - Create .env with required environment variables
+  - Create .gitignore with standard rules
+
+---
+
+## Session Notes
+- Initial session: Defined requirements through Q&A
+- Key decision: skill-generator is a Claude Code skill that creates other skills
+- Lesson learned: Never skip steps - must get user confirmation before proceeding
+- Firecrawl setup: Use firecrawl CLI/skill for web extraction, not Python SDK
+- Documentation rule: Update LESSONS.md, progress.txt, CLAUDE.md BEFORE git commit ONLY when a problem is solved; otherwise git commit directly
+- **CRITICAL:** Never delete existing LESSONS.md content - always append new lessons
+- **VIOLATION INCIDENT:** Lesson 10 documents the deletion of Lessons 1-8 and their restoration
+- **Session restart (2026-03-03):** Restored LESSONS.md (Lessons 1-10 + 13) after context loss
+- **New Rules Added to CLAUDE.md:**
+  - Rule 6 enhanced: Must ask user permission before overwriting LESSONS.md content
+  - Rule 7: Dependency installation must reference TECH_STACK.md first; ask user if not found
+  - Rule 8: Git commit requires explicit user permission (no exceptions)
+  - Rule 9: Frontend development must follow FRONTEND_GUIDELINES.md
+- **Demo Chart Script:** Successfully ran scripts/create_demo_charts.py on 2026-03-03
+  - Created virtual environment (.venv) for Python dependencies
+  - Generated 17 chart types in demo_charts/ folder
+  - Created demo_charts_collection.docx Word document
+  - All charts use FRONTEND_GUIDELINES.md design system
+- **Design System Updates (2026-03-03):**
+  - Semantic colors updated to soft pastels (Success: #C7FFBC, Warning: #FFF2CB, Error: #FCD2CE, Info: #BEE7FF)
+  - Added primary-light color (#333333) for large-area fills
+  - Glassmorphism border-radius fixed to 0px (sharp corners)
+  - Chart color guidelines: light colors for large areas, normal colors for small areas
+  - Demo frontend page created with Light/Dark theme toggle
+  - Font changed to Google Sans Flex for English, Noto Serif SC for Chinese
+- **Git:** All commits pushed successfully
+- **Step 2: Plan Complete:** All 9 specification files created and approved

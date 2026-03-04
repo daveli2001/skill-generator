@@ -340,6 +340,7 @@ Creating HTML page → Read FRONTEND_GUIDELINES.md → Apply design tokens → U
 - Never ask for permission without showing checklist first
 - Never proceed without explicit user approval
 - **NEVER batch multiple sub-steps together - each sub-step (e.g., 4.1, 4.2, 4.3) requires its own checklist + approval before proceeding to the next**
+- **STRICTENED RULE: Whenever there is a sub-step, you MUST ask for user's permission to move along. Never batch steps or skip asking for permission. This applies to ALL phases and ALL sub-steps without exception.**
 - For git commits: Show checklist + permission request, then follow Rule 8 (separate git commit permission)
 
 **VIOLATION CONSEQUENCE:** If you skip approval for any sub-step, you MUST:
